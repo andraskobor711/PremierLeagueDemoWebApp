@@ -20,7 +20,7 @@ public class Match
 
     public int? Matchweek { get; set; }
 
-    public DateTimeOffset KickoffAt { get; set; }
+    public DateTime KickoffAt { get; set; }
 
     [Range(0, int.MaxValue)]
     public int? HomeScore { get; set; }

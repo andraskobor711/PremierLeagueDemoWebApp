@@ -2,57 +2,50 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PremierLeagueWebApi.Infrastructure;
 
 #nullable disable
 
-namespace PremierLeagueWebApi.Infrastructure.Migrations
+namespace PremierLeagueWebApi.Infrastructure.Data.SqliteMigrations
 {
     [DbContext(typeof(PlContext))]
-    [Migration("20261007085221_CreateMatchesTable")]
-    partial class CreateMatchesTable
+    [Migration("20261007193850_InitialSqlite")]
+    partial class InitialSqlite
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.12")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.12");
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("PremierLeagueWebApi.Models.Match", b =>
+            modelBuilder.Entity("PremierLeagueWebApi.Infrastructure.Models.Match", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("AwayScore")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("AwayTeamId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("HomeScore")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("HomeTeamId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<DateTimeOffset>("KickoffAt")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("Matchweek")
-                        .HasColumnType("int");
+                    b.Property<int?>("Matchweek")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("SeasonId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -65,18 +58,16 @@ namespace PremierLeagueWebApi.Infrastructure.Migrations
                     b.ToTable("Matches");
                 });
 
-            modelBuilder.Entity("PremierLeagueWebApi.Models.Season", b =>
+            modelBuilder.Entity("PremierLeagueWebApi.Infrastructure.Models.Season", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Label")
                         .IsRequired()
                         .HasMaxLength(7)
-                        .HasColumnType("nvarchar(7)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -86,32 +77,30 @@ namespace PremierLeagueWebApi.Infrastructure.Migrations
                     b.ToTable("Seasons");
                 });
 
-            modelBuilder.Entity("PremierLeagueWebApi.Models.Team", b =>
+            modelBuilder.Entity("PremierLeagueWebApi.Infrastructure.Models.Team", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Abbreviation")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("OfficialWebsite")
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("UsedName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -130,10 +119,10 @@ namespace PremierLeagueWebApi.Infrastructure.Migrations
             modelBuilder.Entity("SeasonTeam", b =>
                 {
                     b.Property<int>("SeasonsId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("TeamsId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("SeasonsId", "TeamsId");
 
@@ -142,21 +131,21 @@ namespace PremierLeagueWebApi.Infrastructure.Migrations
                     b.ToTable("SeasonTeam");
                 });
 
-            modelBuilder.Entity("PremierLeagueWebApi.Models.Match", b =>
+            modelBuilder.Entity("PremierLeagueWebApi.Infrastructure.Models.Match", b =>
                 {
-                    b.HasOne("PremierLeagueWebApi.Models.Team", "AwayTeam")
+                    b.HasOne("PremierLeagueWebApi.Infrastructure.Models.Team", "AwayTeam")
                         .WithMany()
                         .HasForeignKey("AwayTeamId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("PremierLeagueWebApi.Models.Team", "HomeTeam")
+                    b.HasOne("PremierLeagueWebApi.Infrastructure.Models.Team", "HomeTeam")
                         .WithMany()
                         .HasForeignKey("HomeTeamId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("PremierLeagueWebApi.Models.Season", "Season")
+                    b.HasOne("PremierLeagueWebApi.Infrastructure.Models.Season", "Season")
                         .WithMany()
                         .HasForeignKey("SeasonId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -171,13 +160,13 @@ namespace PremierLeagueWebApi.Infrastructure.Migrations
 
             modelBuilder.Entity("SeasonTeam", b =>
                 {
-                    b.HasOne("PremierLeagueWebApi.Models.Season", null)
+                    b.HasOne("PremierLeagueWebApi.Infrastructure.Models.Season", null)
                         .WithMany()
                         .HasForeignKey("SeasonsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PremierLeagueWebApi.Models.Team", null)
+                    b.HasOne("PremierLeagueWebApi.Infrastructure.Models.Team", null)
                         .WithMany()
                         .HasForeignKey("TeamsId")
                         .OnDelete(DeleteBehavior.Cascade)

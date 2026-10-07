@@ -10,7 +10,7 @@ public record CreateMatchDto
 
     public required int Matchweek { get; init; }
 
-    public required DateTimeOffset KickoffAt { get; init; }
+    public required DateTime KickoffAt { get; init; }
 
     public int? HomeScore { get; init; }
 

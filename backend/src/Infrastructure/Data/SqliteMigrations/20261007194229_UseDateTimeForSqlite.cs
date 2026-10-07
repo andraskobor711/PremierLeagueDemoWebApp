@@ -1,14 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PremierLeagueWebApi.Infrastructure.Migrations
+#nullable disable
+
+namespace PremierLeagueWebApi.Infrastructure.Data.SqliteMigrations
 {
-    public partial class CreateSeasonTable : Migration
+    /// <inheritdoc />
+    public partial class UseDateTimeForSqlite : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
 
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
 

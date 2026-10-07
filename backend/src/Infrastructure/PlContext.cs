@@ -3,21 +3,13 @@ using PremierLeagueWebApi.Infrastructure.Models;
 
 namespace PremierLeagueWebApi.Infrastructure;
 
-public class PlContext(IConfiguration _configuration, DbContextOptions<PlContext> options) : DbContext(options)
+public class PlContext(DbContextOptions<PlContext> options) : DbContext(options)
 {
     public DbSet<Team> Teams { get; set; }
 
     public DbSet<Season> Seasons { get; set; }
 
     public DbSet<Match> Matches { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            optionsBuilder.UseSqlServer(_configuration["ConnectionStrings:DefaultConnection"]);
-        }
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
