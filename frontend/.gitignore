@@ -1,0 +1,48 @@
+# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+
+# Angular build output and cache
+/dist/
+/tmp/
+/out-tsc/
+/bazel-out/
+/.angular/cache/
+
+# Node
+/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/
+.history/*
+
+# Editor and formatter configuration
+.editorconfig
+.prettierrc
+
+# Miscellaneous
+.sass-cache/
+/connect.lock
+/.nyc_output/
+/coverage/
+/.vite/
+/.vitest/
+/libpeerconnection.log
+testem.log
+__screenshots__/
+
+# System files
+.DS_Store
+Thumbs.db
