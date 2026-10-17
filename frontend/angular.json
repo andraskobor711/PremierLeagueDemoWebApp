@@ -62,12 +62,15 @@
               "buildTarget": "frontend:build:development"
             }
           },
-          "defaultConfiguration": "development"
-        },
-        "test": {
-          "builder": "@angular/build:unit-test"
+          "defaultConfiguration": "development",
+          "options": {
+            "proxyConfig": "src/proxy.conf.js",
+            "port": 57412
+          },
+          "test": {
+            "builder": "@angular/build:unit-test"
+          }
         }
       }
     }
   }
-}
