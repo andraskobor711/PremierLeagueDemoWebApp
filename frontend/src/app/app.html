@@ -1,3 +1,23 @@
-<h2>Premier League Demo</h2>
+<h2>Premier League Demo - Header</h2>
 
-<p>This is a demo application</p>
+<nav>
+  <div>
+    <ul>
+      <li>
+        <a class="home-link" routerLink="/home" aria-label="Home">
+          <img src="/PremierLeague.png" alt="Home">
+        </a>
+      </li>
+      <li>
+        <a routerLink="/teams">Teams</a>
+      </li>
+      <li>
+        <a routerLink="/matches">Matches</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
+
+<footer>Premier League Demo - Footer</footer>
