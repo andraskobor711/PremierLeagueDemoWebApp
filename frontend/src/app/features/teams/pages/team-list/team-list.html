@@ -1,7 +1,16 @@
-<h2>Teams</h2>
-
-<ul>
-  @for (team of (teams$ | async); track $index) {
-    <li>{{ team | json }}</li>
-  }
-</ul>
+<div class="teams-page">
+  <ul class="team-grid">
+    @for (team of teams$ | async; track $index) {
+      <li class="team-card">
+        <a class="team-link" [attr.aria-label]="team.usedName">
+          <img
+            [src]="team.logoPath"
+            [alt]="team.usedName"
+            (error)="onLogoError($event)"
+          />
+        </a>
+        <span class="team-name">{{ team.usedName }}</span>
+      </li>
+    }
+  </ul>
+</div>

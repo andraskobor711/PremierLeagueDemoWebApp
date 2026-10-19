@@ -90,6 +90,10 @@ namespace PremierLeagueWebApi.Infrastructure.Data.SqliteMigrations
                         .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("LogoSrc")
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("OfficialWebsite")
                         .HasMaxLength(100)
                         .HasColumnType("TEXT");

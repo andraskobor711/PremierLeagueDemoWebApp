@@ -25,6 +25,10 @@ public class Team
     [DisplayName("Name abbreviation")]
     public required string Abbreviation { get; set; }
 
+    [MaxLength(50)]
+    [DisplayName("Logo source")]
+    public string? LogoSrc { get; set; }
+
     [MaxLength(100)]
     [DisplayName("Official website")]
     public string? OfficialWebsite { get; set; }
