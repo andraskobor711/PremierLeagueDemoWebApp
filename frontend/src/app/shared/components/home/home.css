@@ -1,0 +1,105 @@
+:host {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.home-page {
+  box-sizing: border-box;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 5vw, 4rem);
+  background: linear-gradient(135deg, #f5effa 0%, #edf5ff 55%, #e5f1ff 100%);
+}
+
+.home-page::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: url('/PremierLeague.png') center / clamp(16rem, 42vw, 32rem) auto no-repeat;
+  content: '';
+  opacity: 0.07;
+}
+
+.home-menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  width: 100%;
+}
+
+.home-button {
+  --button-start: #4b176f;
+  --button-end: #742c9b;
+  --button-hover-start: #5c2084;
+  --button-hover-end: #8736ad;
+
+  box-sizing: border-box;
+  display: flex;
+  width: min(100%, 16rem);
+  min-height: 12rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border: 1px solid transparent;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, var(--button-start), var(--button-end));
+  box-shadow: 0 3px 10px rgb(44 13 64 / 10%);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.25rem;
+  font-weight: 600;
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease,
+    filter 180ms ease;
+}
+
+.home-button--matches {
+  --button-start: #155e9b;
+  --button-end: #2188b8;
+  --button-hover-start: #1b70b2;
+  --button-hover-end: #2b9dca;
+}
+
+.home-button:hover {
+  transform: translateY(-4px);
+  background: linear-gradient(135deg, var(--button-hover-start), var(--button-hover-end));
+  box-shadow: 0 8px 18px rgb(44 13 64 / 16%);
+}
+
+.home-button:active {
+  transform: translateY(-1px) scale(0.98);
+  filter: brightness(0.85);
+}
+
+.home-button:focus-visible {
+  outline: 3px solid #174a7e;
+  outline-offset: 4px;
+}
+
+.home-button-icon {
+  font-size: 3.5rem;
+  line-height: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-button {
+    transition: none;
+  }
+
+  .home-button:hover,
+  .home-button:active {
+    transform: none;
+  }
+}

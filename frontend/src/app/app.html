@@ -1,23 +1,30 @@
-<h2>Premier League Demo - Header</h2>
-
-<nav>
-  <div>
-    <ul>
-      <li>
-        <a class="home-link" routerLink="/home" aria-label="Home">
-          <img src="/PremierLeague.png" alt="Home">
-        </a>
-      </li>
-      <li>
-        <a routerLink="/teams">Teams</a>
-      </li>
-      <li>
-        <a routerLink="/matches">Matches</a>
-      </li>
+<nav class="main-nav" aria-label="Main navigation">
+  <div class="nav-content">
+    <a class="home-link" routerLink="/home" aria-label="Home">
+      <img src="/PremierLeague.png" alt="Home">
+    </a>
+    <ul class="nav-links">
+      <li><a class="nav-link nav-link--teams" routerLink="/teams">Teams</a></li>
+      <li><a class="nav-link nav-link--matches" routerLink="/matches">Matches</a></li>
     </ul>
   </div>
 </nav>
 
-<router-outlet></router-outlet>
+<div class="app-content">
+  <router-outlet></router-outlet>
+</div>
 
-<footer>Premier League Demo - Footer</footer>
+<footer class="app-footer">
+  <p class="footer-message">A demo application showcasing Angular development.</p>
+  <address class="footer-contact">
+    <span class="footer-name">András Kóbor</span>
+    <a href="mailto:andras.kobor711@outlook.com">
+      <fa-icon [icon]="faEnvelope" aria-hidden="true" />
+      <span>andras.kobor711@outlook.com</span>
+    </a>
+    <a href="tel:+36304789918">
+      <fa-icon [icon]="faPhone" aria-hidden="true" />
+      <span>+36-30/478-9918</span>
+    </a>
+  </address>
+</footer>
