@@ -12,6 +12,8 @@ public record TeamSchema
 
     public required string Abbreviation { get; init; }
 
+    public string? LogoSrc { get; set; }
+
     public string? OfficialWebsite { get; init; }
 
     public ICollection<SeasonSchema> Seasons { get; init; } = [];

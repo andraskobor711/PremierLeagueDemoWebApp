@@ -9,7 +9,7 @@ public class TeamRepository(PlContext _plContext) : ITeamRepository
     public async Task<IEnumerable<Team>> GetAll(CancellationToken? cancellationToken)
         => await _plContext
             .Teams
-            .OrderBy(t => t.FullName)
+            .OrderBy(t => t.UsedName)
             .ToListAsync(cancellationToken ?? CancellationToken.None);
 
     public async Task<Team?> GetTeamById(int id, CancellationToken? cancellationToken)
