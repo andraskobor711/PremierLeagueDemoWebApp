@@ -1,4 +1,13 @@
-<p>This is a demo application</p>
+<main class="home-page">
+  <nav class="home-menu" aria-label="Main sections">
+    <button class="home-button home-button--teams" type="button" (click)="goToTeams()">
+      <fa-icon class="home-button-icon" [icon]="faUsers" aria-hidden="true" />
+      <span>Teams</span>
+    </button>
 
-<button type="button" (click)="goToTeams()">Teams</button>
-<button type="button" (click)="goToMatches()">Matches</button>
+    <button class="home-button home-button--matches" type="button" (click)="goToMatches()">
+      <fa-icon class="home-button-icon" [icon]="faCalendarCheck" aria-hidden="true" />
+      <span>Matches</span>
+    </button>
+  </nav>
+</main>
