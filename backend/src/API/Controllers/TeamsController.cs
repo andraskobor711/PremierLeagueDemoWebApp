@@ -12,6 +12,7 @@ public class TeamsController(ITeamRepository _teamRepository) : ControllerBase
 {
     [HttpGet]
     [Produces("application/json")]
+    [ProducesResponseType(typeof(List<TeamSchema>), StatusCodes.Status200OK)]
     public async Task<ActionResult<List<TeamSchema>>> GetAllTeams()
     {
         List<Team> teams = [.. await _teamRepository.GetAll()];
@@ -22,6 +23,7 @@ public class TeamsController(ITeamRepository _teamRepository) : ControllerBase
     [HttpGet]
     [Route("{id}")]
     [Produces("application/json")]
+    [ProducesResponseType(typeof(TeamSchema), StatusCodes.Status200OK)]
     public async Task<ActionResult<TeamSchema>> GetTeamById([FromRoute] int id)
     {
         Team? team = await _teamRepository.GetTeamById(id);
@@ -33,7 +35,8 @@ public class TeamsController(ITeamRepository _teamRepository) : ControllerBase
 
     [HttpPost]
     [Produces("application/json")]
-    public async Task<ActionResult<TeamSchema>> Create([FromBody]CreateTeamSchema createTeamSchema)
+    [ProducesResponseType(typeof(TeamSchema), StatusCodes.Status200OK)]
+    public async Task<ActionResult<TeamSchema>> Create([FromBody] CreateTeamSchema createTeamSchema)
     {
 
         var newTeam = createTeamSchema.Adapt<Team>();
@@ -47,7 +50,8 @@ public class TeamsController(ITeamRepository _teamRepository) : ControllerBase
     [HttpPut]
     [Route("{id}")]
     [Produces("application/json")]
-    public async Task<ActionResult<TeamSchema>> Update([FromRoute] int id, [FromBody]UpdateTeamSchema updateTeamSchema)
+    [ProducesResponseType(typeof(TeamSchema), StatusCodes.Status200OK)]
+    public async Task<ActionResult<TeamSchema>> Update([FromRoute] int id, [FromBody] UpdateTeamSchema updateTeamSchema)
     {
 
         var teamToUpdate = updateTeamSchema.Adapt<Team>();
