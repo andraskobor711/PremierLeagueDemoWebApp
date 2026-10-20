@@ -1,15 +1,15 @@
 <div class="teams-page">
   <ul class="team-grid">
-    @for (team of teams$ | async; track $index) {
+    @for (team of teams$ | async; track team.id) {
       <li class="team-card">
-        <a class="team-link" [attr.aria-label]="team.usedName">
+        <a class="team-link" [routerLink]="['/teams', team.id]" [attr.aria-label]="team.usedName">
           <img
             [src]="team.logoPath"
             [alt]="team.usedName"
             (error)="onLogoError($event)"
           />
+          <span class="team-name">{{ team.usedName }}</span>
         </a>
-        <span class="team-name">{{ team.usedName }}</span>
       </li>
     }
   </ul>
