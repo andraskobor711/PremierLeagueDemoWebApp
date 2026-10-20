@@ -8,6 +8,8 @@ public interface IMatchRepository
 
     Task<Match?> GetById(int id, CancellationToken? cancellation = default);
 
+    Task<IEnumerable<Match>> GetByGameWeek(int seasonId, int gameWeek, CancellationToken? cancellationToken = default);
+
     Task<int> Add(Match match, CancellationToken? cancellationToken = default);
 
     Task<Match?> Update(Match matchUpdate, CancellationToken? cancellationToken = default);

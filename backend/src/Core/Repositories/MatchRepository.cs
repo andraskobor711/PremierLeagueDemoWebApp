@@ -12,7 +12,6 @@ public class MatchRepository(PlContext _plContext) : IMatchRepository
             .Include(m => m.HomeTeam)
             .Include(m => m.AwayTeam)
             .Include(m => m.Season)
-            .OrderBy(m => m.KickoffAt)
             .ToListAsync(cancellationToken ?? CancellationToken.None);
 
     public async Task<Match?> GetById(int id, CancellationToken? cancellationToken)
@@ -22,6 +21,15 @@ public class MatchRepository(PlContext _plContext) : IMatchRepository
             .Include(m => m.AwayTeam)
             .Include(m => m.Season)
             .FirstOrDefaultAsync(m => m.Id == id, cancellationToken ?? CancellationToken.None);
+
+    public async Task<IEnumerable<Match>> GetByGameWeek(int seasonId, int gameWeek, CancellationToken? cancellationToken = null)
+        => await _plContext
+            .Matches
+            .Include(m => m.HomeTeam)
+            .Include(m => m.AwayTeam)
+            .Include(m => m.Season)
+            .Where(m => m.SeasonId == seasonId && m.Matchweek == gameWeek)
+            .ToListAsync(cancellationToken ?? CancellationToken.None);
 
     public async Task<int> Add(Match match, CancellationToken? cancellationToken = null)
     {

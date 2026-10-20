@@ -2,11 +2,11 @@
 
 public record UpdateMatchSchema
 {
-    public required string SeasonLabel { get; init; }
+    public required int SeasonId { get; init; }
 
-    public required string HomeTeamName { get; init; }
+    public required int HomeTeamId { get; init; }
 
-    public required string AwayTeamName { get; init; }
+    public required int AwayTeamId { get; init; }
 
     public required int Matchweek { get; init; }
 
