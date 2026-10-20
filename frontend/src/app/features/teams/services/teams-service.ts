@@ -5,9 +5,13 @@ import { environment } from '../../../../environments/environment';
 
 export const FALLBACK_TEAM_LOGO_PATH = '/TeamLogos/PremierLeague.png';
 
-interface TeamResponse {
+export interface TeamResponse {
+    id: number;
+    fullName: string;
     usedName: string;
+    abbreviation: string;
     logoSrc?: string | null;
+    officialWebsite: string | null;
 }
 
 export interface Team extends TeamResponse {
@@ -16,17 +20,26 @@ export interface Team extends TeamResponse {
 
 @Service()
 export class TeamsService {
-    private readonly plApiTeamsUrl = `${environment.plApiBaseUrl}/teams`;
     private readonly teamsClient = inject(HttpClient);
 
     getTeams(): Observable<Team[]> {
-        return this.teamsClient.get<TeamResponse[]>(this.plApiTeamsUrl).pipe(
-            map(teams => teams.map(team => ({
-                ...team,
-                logoPath: team.logoSrc
-                    ? `/TeamLogos/${team.logoSrc}.png`
-                    : FALLBACK_TEAM_LOGO_PATH
-            })))
+        return this.teamsClient.get<TeamResponse[]>(`${environment.plApiBaseUrl}/teams`).pipe(
+            map(teams => teams.map(team => this.toTeam(team)))
         );
+    }
+
+    getTeamById(id: number): Observable<Team> {
+        return this.teamsClient.get<TeamResponse>(`${environment.plApiBaseUrl}/teams/${id}`).pipe(
+            map(team => this.toTeam(team))
+        );
+    }
+
+    private toTeam(team: TeamResponse): Team {
+        return {
+            ...team,
+            logoPath: team.logoSrc
+                ? `/TeamLogos/${team.logoSrc}.png`
+                : FALLBACK_TEAM_LOGO_PATH
+        };
     }
 }

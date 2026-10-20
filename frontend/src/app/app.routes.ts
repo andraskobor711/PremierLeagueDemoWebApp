@@ -3,10 +3,12 @@ import { TeamList } from './features/teams/pages/team-list/team-list';
 import { App } from './app';
 import { NotFound } from './shared/components/not-found/not-found';
 import { Home } from './shared/components/home/home';
+import { TeamDetail } from './features/teams/pages/team-detail/team-detail';
 
 export const routes: Routes = [
     { path: 'home', component: Home },
     { path: 'teams', component: TeamList },
+    { path: 'teams/:id', component: TeamDetail },
 
     // default route
     { path: '', redirectTo: 'home', pathMatch: 'full' },

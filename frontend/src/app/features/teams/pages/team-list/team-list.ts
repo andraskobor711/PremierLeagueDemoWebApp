@@ -1,9 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { FALLBACK_TEAM_LOGO_PATH, TeamsService } from '../../services/teams-service';
 import { AsyncPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
-  imports: [AsyncPipe],
+  imports: [AsyncPipe, RouterLink],
   selector: 'app-team-list',
   styleUrl: './team-list.css',
   templateUrl: './team-list.html',
