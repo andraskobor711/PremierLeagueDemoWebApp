@@ -40,7 +40,7 @@ public class PlContext(DbContextOptions<PlContext> options) : DbContext(options)
         {
             entity.Property(s => s.Label)
                   .IsRequired()
-                  .HasMaxLength(7); // "yyyy/yy"
+                  .HasMaxLength(9); // "yyyy/yyyy"
 
             entity.HasIndex(s => s.Label).IsUnique();
         });

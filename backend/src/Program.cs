@@ -37,6 +37,7 @@ builder.Services.AddScoped<IMatchRepository, MatchRepository>();
 
 // BLL Managers
 builder.Services.AddScoped<IMatchManager, MatchManager>();
+builder.Services.AddScoped<ISeasonManager, SeasonManager>();
 
 builder.Services.AddControllersWithViews();
 
@@ -60,7 +61,7 @@ app.MapFallbackToFile("/index.html");
 
 app.Run();
 
-void AddMappings(IServiceCollection services)
+static void AddMappings(IServiceCollection services)
 {
     var config = TypeAdapterConfig.GlobalSettings;
     config.Scan(Assembly.GetExecutingAssembly());
