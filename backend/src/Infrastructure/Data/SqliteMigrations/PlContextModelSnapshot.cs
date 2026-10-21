@@ -63,7 +63,7 @@ namespace PremierLeagueWebApi.Infrastructure.Data.SqliteMigrations
 
                     b.Property<string>("Label")
                         .IsRequired()
-                        .HasMaxLength(7)
+                        .HasMaxLength(9)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

@@ -8,5 +8,5 @@ public record SeasonSchema
 
     public required string Label { get; init; }
 
-    public ICollection<TeamSchema> Teams { get; init; } = [];
+    public ICollection<TeamInSeasonSchema> Teams { get; init; } = [];
 }

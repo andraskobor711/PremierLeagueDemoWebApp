@@ -44,6 +44,15 @@ public class MatchesController(IMatchManager _matchManager) : ControllerBase
         return Ok(matches.Adapt<List<MatchSchema>>());
     }
 
+    [HttpGet]
+    [Route("current-gameweek")]
+    [Produces("application/json")]
+    public async Task<ActionResult<int>> GetCurrentGameWeek()
+    {
+        int currentGameWeek = await _matchManager.GetCurrentGameWeek();
+        return Ok(currentGameWeek);
+    }
+
     [HttpPost]
     [Produces("application/json")]
     [ProducesResponseType(typeof(MatchSchema), StatusCodes.Status200OK)]

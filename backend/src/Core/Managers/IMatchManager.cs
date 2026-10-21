@@ -15,4 +15,6 @@ public interface IMatchManager
     public Task<Match?> UpdateMatch(Match match, CancellationToken? cancellationToken = default);
 
     public Task<bool> DeleteMatch(int id, CancellationToken? cancellationToken = default);
+
+    public Task<int> GetCurrentGameWeek(CancellationToken? cancellationToken = default);
 }

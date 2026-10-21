@@ -3,7 +3,7 @@ using PremierLeagueWebApi.Infrastructure.Models;
 
 namespace PremierLeagueWebApi.Core.Managers;
 
-public class MatchManager(IMatchRepository _matchRepository) : IMatchManager
+public class MatchManager(IMatchRepository _matchRepository, ISeasonManager _seasonManager) : IMatchManager
 {
     public async Task<IEnumerable<Match>> GetAllMatches(CancellationToken? cancellationToken = null)
         => (await _matchRepository.GetAll(cancellationToken))
@@ -31,4 +31,23 @@ public class MatchManager(IMatchRepository _matchRepository) : IMatchManager
 
     public async Task<bool> DeleteMatch(int id, CancellationToken? cancellationToken = null)
         => await _matchRepository.Delete(id, cancellationToken);
+
+    public async Task<int> GetCurrentGameWeek(CancellationToken? cancellationToken = null)
+    {
+        var now = DateTime.UtcNow;
+        var seasonId = (await _seasonManager.GetCurrentSeason()
+            ?? throw new InvalidOperationException("Current season is not available."))
+            .Id;
+
+        var matches = (await _matchRepository.GetBySeasonWithoutIncludes(seasonId))
+            .Where(m => m.Matchweek is not null)
+            .OrderBy(m => m.KickoffAt);
+
+        var gameWeekDeterminer = matches.SkipWhile(m => m.KickoffAt <= now).FirstOrDefault()
+            ?? matches.LastOrDefault();
+
+        return gameWeekDeterminer is not null
+            ? gameWeekDeterminer.Matchweek!.Value   // null values filtered earlier
+            : 1;
+    }
 }

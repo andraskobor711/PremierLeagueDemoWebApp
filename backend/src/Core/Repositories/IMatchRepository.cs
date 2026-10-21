@@ -5,6 +5,8 @@ namespace PremierLeagueWebApi.Core.Repositories;
 public interface IMatchRepository
 {
     Task<IEnumerable<Match>> GetAll(CancellationToken? cancellationToken = default);
+    
+    Task<IEnumerable<Match>> GetBySeasonWithoutIncludes(int seasonId, CancellationToken? cancellationToken = default);
 
     Task<Match?> GetById(int id, CancellationToken? cancellation = default);
 
