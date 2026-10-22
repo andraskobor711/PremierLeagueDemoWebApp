@@ -1,0 +1,127 @@
+@if (state$ | async; as state) {
+  @switch (state.status) {
+    @case ('loading') {
+      <main class="game-week-page">
+        <div class="loading-state">
+          <span class="loading-spinner" aria-hidden="true"></span>
+          <p class="status-message" role="status">Loading matches...</p>
+        </div>
+      </main>
+    }
+    @case ('loaded') {
+      <main class="game-week-page">
+        <header class="game-week-heading">
+          @if (state.seasonLabel) {
+            <p class="season-label">{{ state.seasonLabel }}</p>
+          }
+          @if (state.gameWeekNumber !== null) {
+            <div class="gameweek-navigation">
+              @if (state.gameWeekNumber > 1 && state.seasonId !== null) {
+                <a
+                  class="gameweek-arrow"
+                  [routerLink]="['/matches']"
+                  [queryParams]="{ seasonId: state.seasonId, gameWeek: state.gameWeekNumber - 1 }"
+                  [attr.aria-label]="'Previous gameweek'"
+                  title="Previous gameweek"
+                >
+                  <fa-icon [icon]="previousGameWeekIcon" aria-hidden="true" />
+                </a>
+              } @else {
+                <span class="gameweek-arrow-placeholder" aria-hidden="true"></span>
+              }
+              <h1>Gameweek {{ state.gameWeekNumber }}</h1>
+              @if (state.gameWeekNumber < maxGameWeek && state.seasonId !== null) {
+                <a
+                  class="gameweek-arrow"
+                  [routerLink]="['/matches']"
+                  [queryParams]="{ seasonId: state.seasonId, gameWeek: state.gameWeekNumber + 1 }"
+                  [attr.aria-label]="'Next gameweek'"
+                  title="Next gameweek"
+                >
+                  <fa-icon [icon]="nextGameWeekIcon" aria-hidden="true" />
+                </a>
+              } @else {
+                <span class="gameweek-arrow-placeholder" aria-hidden="true"></span>
+              }
+            </div>
+          } @else {
+            <h1>Matches</h1>
+          }
+        </header>
+
+        @if (state.days.length > 0) {
+          <div class="match-days">
+            @for (day of state.days; track day.date.getTime()) {
+              <section class="match-day" [attr.aria-label]="day.date | date:'fullDate'">
+                <h2>{{ day.date | date:'fullDate' }}</h2>
+                <ul class="match-list">
+                  @for (match of day.matches; track match.id) {
+                    <li class="match-card">
+                      <time class="kickoff-time" [attr.datetime]="match.kickoffAt">
+                        {{ match.kickoffAt | date:'shortTime' }}
+                      </time>
+                      <div class="match-lineup">
+                        <div class="home-team">
+                          <span>{{ match.homeTeamName }}</span>
+                          <img
+                            [src]="match.homeTeamLogoSrc ? '/TeamLogos/' + match.homeTeamLogoSrc + '.png' : fallbackTeamLogoPath"
+                            [alt]="match.homeTeamName + ' logo'"
+                            (error)="onLogoError($event)"
+                          />
+                        </div>
+                        <span class="score">{{ match.homeScore ?? '–' }}</span>
+                        <span class="score-separator" aria-hidden="true">-</span>
+                        <span class="score">{{ match.awayScore ?? '–' }}</span>
+                        <div class="away-team">
+                          <img
+                            [src]="match.awayTeamLogoSrc ? '/TeamLogos/' + match.awayTeamLogoSrc + '.png' : fallbackTeamLogoPath"
+                            [alt]="match.awayTeamName + ' logo'"
+                            (error)="onLogoError($event)"
+                          />
+                          <span>{{ match.awayTeamName }}</span>
+                        </div>
+                      </div>
+                    </li>
+                  }
+                </ul>
+              </section>
+            }
+          </div>
+        } @else {
+          <section class="empty-state" role="status">
+            <fa-icon [icon]="noMatchesIcon" aria-hidden="true" />
+            <p>There are no matches to show for this gameweek.</p>
+          </section>
+        }
+      </main>
+    }
+    @case ('invalid-query') {
+      <main class="game-week-page">
+        <section class="error-state" role="alert">
+          <fa-icon class="error-icon" [icon]="errorIcon" aria-hidden="true" />
+          <p>Something went wrong.</p>
+          <nav class="nav-links" aria-label="Helpful links">
+            <a class="nav-link" routerLink="/home">Return to home</a>
+            <a class="nav-link nav-link--matches" routerLink="/matches/current-gameweek">
+              View the current gameweek
+            </a>
+          </nav>
+        </section>
+      </main>
+    }
+    @case ('load-error') {
+      <main class="game-week-page">
+        <section class="error-state" role="alert">
+          <fa-icon class="error-icon" [icon]="errorIcon" aria-hidden="true" />
+          <p>Something went wrong.</p>
+          <nav class="nav-links" aria-label="Helpful links">
+            <a class="nav-link" routerLink="/home">Return to home</a>
+            <a class="nav-link nav-link--matches" routerLink="/matches/current-gameweek">
+              View the current gameweek
+            </a>
+          </nav>
+        </section>
+      </main>
+    }
+  }
+}
