@@ -2,7 +2,10 @@
   @switch (state.status) {
     @case ('loading') {
       <main class="match-week-page">
-        <p class="status-message" role="status">Loading matches...</p>
+        <div class="loading-state">
+          <span class="loading-spinner" aria-hidden="true"></span>
+          <p class="status-message" role="status">Loading matches...</p>
+        </div>
       </main>
     }
     @case ('loaded') {
@@ -85,7 +88,10 @@
             }
           </div>
         } @else {
-          <p class="empty-state">There are no matches to show for this gameweek.</p>
+          <section class="empty-state" role="status">
+            <fa-icon [icon]="noMatchesIcon" aria-hidden="true" />
+            <p>There are no matches to show for this gameweek.</p>
+          </section>
         }
       </main>
     }

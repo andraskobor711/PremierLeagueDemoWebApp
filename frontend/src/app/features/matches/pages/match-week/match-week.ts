@@ -2,7 +2,11 @@ import { Component, inject } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { RouterLink, ActivatedRoute } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCalendarXmark,
+  faChevronLeft,
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons';
 import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { Match, MatchService } from '../../services/match-service';
 import { FALLBACK_TEAM_LOGO_PATH } from '../../../teams/services/teams-service';
@@ -31,6 +35,7 @@ type MatchWeekState =
   templateUrl: './match-week.html',
 })
 export class MatchWeek {
+  readonly noMatchesIcon = faCalendarXmark;
   readonly previousGameWeekIcon = faChevronLeft;
   readonly nextGameWeekIcon = faChevronRight;
   readonly maxGameWeek = 38;

@@ -187,11 +187,62 @@
   text-align: center;
 }
 
-.empty-state,
 .status-message {
   padding: 1rem;
   color: #51465a;
   text-align: center;
+}
+
+.empty-state {
+  display: flex;
+  min-height: 40vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: #51465a;
+  text-align: center;
+}
+
+.empty-state fa-icon {
+  color: #5a2a78;
+  font-size: 7.0rem;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+}
+
+.loading-state {
+  display: flex;
+  min-height: 40vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.loading-spinner {
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0.3rem solid rgb(90 42 120 / 20%);
+  border-top-color: #5a2a78;
+  border-radius: 50%;
+  animation: loading-spin 800ms linear infinite;
+}
+
+.loading-state .status-message {
+  margin: 0;
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+}
+
+@keyframes loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .error-state {
@@ -273,6 +324,10 @@
 @media (prefers-reduced-motion: reduce) {
   .gameweek-arrow {
     transition: none;
+  }
+
+  .loading-spinner {
+    animation: none;
   }
 
   .gameweek-arrow:hover,
