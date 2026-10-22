@@ -1,0 +1,134 @@
+:host {
+  display: block;
+}
+
+.match-form {
+  display: grid;
+  gap: 1.25rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid #ded9e3;
+  border-radius: 1rem;
+  background: rgb(255 255 255 / 38%);
+  box-shadow: 0 4px 16px rgb(44 13 64 / 10%);
+}
+
+.form-season {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e8e1ed;
+  color: #35104f;
+}
+
+.form-season-label {
+  color: #51465a;
+}
+
+.form-season-value {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.form-field {
+  display: grid;
+  min-width: 0;
+  gap: 0.4rem;
+  color: #35104f;
+  font-weight: 600;
+}
+
+.form-field input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #9b8ba5;
+  border-radius: 0.5rem;
+  background: #fff;
+  color: #241032;
+  font: inherit;
+  font-weight: 400;
+}
+
+.form-field input:focus-visible {
+  outline: 3px solid rgb(23 74 126 / 35%);
+  border-color: #174a7e;
+}
+
+.optional-label {
+  color: #65586d;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.form-validation,
+.form-error {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #8b1e2d;
+  font-weight: 600;
+}
+
+.submit-button {
+  justify-self: center;
+  min-width: min(100%, 14rem);
+  min-height: 2.9rem;
+  padding: 0.7rem 1.5rem;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #5c2084, #8736ad);
+  box-shadow: 0 3px 8px rgb(44 13 64 / 14%);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    filter 160ms ease;
+}
+
+.submit-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgb(44 13 64 / 20%);
+}
+
+.submit-button:active:not(:disabled) {
+  transform: scale(0.97);
+  filter: brightness(0.9);
+}
+
+.submit-button:focus-visible {
+  outline: 3px solid #174a7e;
+  outline-offset: 3px;
+}
+
+.submit-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+@media (max-width: 38rem) {
+  .form-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .submit-button {
+    transition: none;
+  }
+
+  .submit-button:hover,
+  .submit-button:active {
+    transform: none;
+  }
+}

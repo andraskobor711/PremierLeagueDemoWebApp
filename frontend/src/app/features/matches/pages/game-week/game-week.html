@@ -14,39 +14,49 @@
           @if (state.seasonLabel) {
             <p class="season-label">{{ state.seasonLabel }}</p>
           }
-          @if (state.gameWeekNumber !== null) {
-            <div class="gameweek-navigation">
-              @if (state.gameWeekNumber > 1 && state.seasonId !== null) {
-                <a
-                  class="gameweek-arrow"
-                  [routerLink]="['/matches']"
-                  [queryParams]="{ seasonId: state.seasonId, gameWeek: state.gameWeekNumber - 1 }"
-                  [attr.aria-label]="'Previous gameweek'"
-                  title="Previous gameweek"
-                >
-                  <fa-icon [icon]="previousGameWeekIcon" aria-hidden="true" />
-                </a>
-              } @else {
-                <span class="gameweek-arrow-placeholder" aria-hidden="true"></span>
-              }
-              <h1>Gameweek {{ state.gameWeekNumber }}</h1>
-              @if (state.gameWeekNumber < maxGameWeek && state.seasonId !== null) {
-                <a
-                  class="gameweek-arrow"
-                  [routerLink]="['/matches']"
-                  [queryParams]="{ seasonId: state.seasonId, gameWeek: state.gameWeekNumber + 1 }"
-                  [attr.aria-label]="'Next gameweek'"
-                  title="Next gameweek"
-                >
-                  <fa-icon [icon]="nextGameWeekIcon" aria-hidden="true" />
-                </a>
-              } @else {
-                <span class="gameweek-arrow-placeholder" aria-hidden="true"></span>
-              }
-            </div>
-          } @else {
-            <h1>Matches</h1>
-          }
+          <div class="gameweek-heading-row">
+            <a
+              class="create-match-link"
+              routerLink="/matches/new"
+              [queryParams]="{ gameWeek: state.gameWeekNumber }"
+            >
+              <fa-icon [icon]="createMatchIcon" aria-hidden="true" />
+              <span>Create match</span>
+            </a>
+            @if (state.gameWeekNumber !== null) {
+              <div class="gameweek-navigation">
+                @if (state.gameWeekNumber > 1 && state.seasonId !== null) {
+                  <a
+                    class="gameweek-arrow"
+                    [routerLink]="['/matches']"
+                    [queryParams]="{ seasonId: state.seasonId, gameWeek: state.gameWeekNumber - 1 }"
+                    [attr.aria-label]="'Previous gameweek'"
+                    title="Previous gameweek"
+                  >
+                    <fa-icon [icon]="previousGameWeekIcon" aria-hidden="true" />
+                  </a>
+                } @else {
+                  <span class="gameweek-arrow-placeholder" aria-hidden="true"></span>
+                }
+                <h1>Gameweek {{ state.gameWeekNumber }}</h1>
+                @if (state.gameWeekNumber < maxGameWeek && state.seasonId !== null) {
+                  <a
+                    class="gameweek-arrow"
+                    [routerLink]="['/matches']"
+                    [queryParams]="{ seasonId: state.seasonId, gameWeek: state.gameWeekNumber + 1 }"
+                    [attr.aria-label]="'Next gameweek'"
+                    title="Next gameweek"
+                  >
+                    <fa-icon [icon]="nextGameWeekIcon" aria-hidden="true" />
+                  </a>
+                } @else {
+                  <span class="gameweek-arrow-placeholder" aria-hidden="true"></span>
+                }
+              </div>
+            } @else {
+              <h1>Matches</h1>
+            }
+          </div>
         </header>
 
         @if (state.days.length > 0) {
@@ -57,6 +67,14 @@
                 <ul class="match-list">
                   @for (match of day.matches; track match.id) {
                     <li class="match-card">
+                      <a
+                        class="edit-match-link"
+                        [routerLink]="['/matches', match.id, 'edit']"
+                        [attr.aria-label]="'Edit ' + match.homeTeamName + ' vs ' + match.awayTeamName"
+                        title="Edit match"
+                      >
+                        <fa-icon [icon]="editMatchIcon" aria-hidden="true" />
+                      </a>
                       <time class="kickoff-time" [attr.datetime]="match.kickoffAt">
                         {{ match.kickoffAt | date:'shortTime' }}
                       </time>

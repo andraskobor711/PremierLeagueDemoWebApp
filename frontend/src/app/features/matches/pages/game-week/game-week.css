@@ -29,6 +29,18 @@
   text-align: center;
 }
 
+.gameweek-heading-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+}
+
+.gameweek-heading-row > h1,
+.gameweek-heading-row > .gameweek-navigation {
+  grid-column: 2;
+  grid-row: 1;
+}
+
 .season-label {
   margin: 0 0 0.25rem;
   color: #51465a;
@@ -86,6 +98,46 @@
   outline-offset: 3px;
 }
 
+.create-match-link {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+  padding: 0.7rem 1.25rem;
+  border: 1px solid rgb(90 42 120 / 35%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 38%);
+  box-shadow: 0 2px 8px rgb(44 13 64 / 8%);
+  color: #35104f;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
+}
+
+.create-match-link:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #5c2084, #8736ad);
+  box-shadow: 0 4px 10px rgb(44 13 64 / 18%);
+  color: #fff;
+}
+
+.create-match-link:active {
+  transform: scale(0.97);
+}
+
+.create-match-link:focus-visible {
+  outline: 3px solid #174a7e;
+  outline-offset: 3px;
+}
+
 .match-days {
   display: grid;
   gap: 1.5rem;
@@ -122,8 +174,45 @@
   align-items: center;
   justify-content: center;
   min-height: 5rem;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 3.75rem 0.75rem 1rem;
   color: #35104f;
+}
+
+.edit-match-link {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  transform: translateY(-50%);
+  place-items: center;
+  border: 1px solid rgb(90 42 120 / 30%);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 38%);
+  color: #5a2a78;
+  text-decoration: none;
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
+}
+
+.edit-match-link:hover {
+  transform: translateY(calc(-50% - 2px));
+  background: #5a2a78;
+  box-shadow: 0 4px 10px rgb(44 13 64 / 18%);
+  color: #fff;
+}
+
+.edit-match-link:active {
+  transform: translateY(-50%) scale(0.96);
+}
+
+.edit-match-link:focus-visible {
+  outline: 3px solid #174a7e;
+  outline-offset: 3px;
 }
 
 .match-card + .match-card {
@@ -333,6 +422,27 @@
 }
 
 @media (max-width: 38rem) {
+  .gameweek-heading-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .gameweek-heading-row > h1,
+  .gameweek-heading-row > .gameweek-navigation,
+  .create-match-link {
+    grid-column: 1;
+  }
+
+  .gameweek-heading-row > h1,
+  .gameweek-heading-row > .gameweek-navigation {
+    grid-row: 2;
+  }
+
+  .create-match-link {
+    grid-row: 1;
+    justify-self: center;
+  }
+
   .error-state .nav-links {
     gap: 0.35rem;
     border-radius: 1.25rem;
@@ -357,7 +467,7 @@
   .match-card {
     min-height: 6rem;
     align-items: flex-end;
-    padding: 1.75rem 0.5rem 0.75rem;
+    padding: 1.75rem 3rem 0.75rem 0.5rem;
   }
 
   .kickoff-time {
@@ -390,6 +500,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .gameweek-arrow,
+  .create-match-link,
+  .edit-match-link,
   .error-state .nav-link {
     transition: none;
   }
@@ -401,6 +513,17 @@
   .gameweek-arrow:hover,
   .gameweek-arrow:active {
     transform: none;
+  }
+
+  .create-match-link:hover,
+  .create-match-link:active {
+    transform: none;
+  }
+
+  .edit-match-link,
+  .edit-match-link:hover,
+  .edit-match-link:active {
+    transform: translateY(-50%);
   }
 
   .error-state .nav-link:hover,

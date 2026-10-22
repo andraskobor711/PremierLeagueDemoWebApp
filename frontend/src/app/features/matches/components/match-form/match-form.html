@@ -1,0 +1,65 @@
+<form class="match-form" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="form-season">
+    <span class="form-season-label">Season</span>
+    <span class="form-season-value">{{ season.label }}</span>
+  </div>
+
+  <div class="form-grid">
+    <div class="form-field">
+      <app-team-picker
+        label="Home team"
+        name="home-team"
+        [teams]="teams"
+        formControlName="homeTeamId"
+      />
+    </div>
+
+    <div class="form-field">
+      <app-team-picker
+        label="Away team"
+        name="away-team"
+        [teams]="teams"
+        formControlName="awayTeamId"
+      />
+    </div>
+
+    @if (form.hasError('sameTeams') && (form.touched || form.dirty)) {
+      <p class="form-validation" role="alert">Choose two different teams.</p>
+    }
+
+    <label class="form-field">
+      <span>Gameweek</span>
+      <input
+        type="number"
+        min="1"
+        max="38"
+        step="1"
+        formControlName="gameWeekNumber"
+        required
+      />
+    </label>
+
+    <label class="form-field">
+      <span>Kickoff date and time</span>
+      <input type="datetime-local" formControlName="kickoffAt" required />
+    </label>
+
+    <label class="form-field">
+      <span>Home score</span>
+      <input type="number" min="0" step="1" formControlName="homeScore" />
+    </label>
+
+    <label class="form-field">
+      <span>Away score</span>
+      <input type="number" min="0" step="1" formControlName="awayScore" />
+    </label>
+  </div>
+
+  @if (submitError) {
+    <p class="form-error" role="alert">{{ submitError }}</p>
+  }
+
+  <button class="submit-button" type="submit" [disabled]="submitting">
+    {{ submitting ? (editing ? 'Saving changes...' : 'Creating match...') : (editing ? 'Save changes' : 'Create match') }}
+  </button>
+</form>
