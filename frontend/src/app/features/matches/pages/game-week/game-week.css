@@ -247,35 +247,102 @@
 
 .error-state {
   display: flex;
-  flex-wrap: wrap;
+  min-height: 40vh;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem 1.25rem;
+  gap: 1rem;
   padding: 2rem 1rem;
   color: #35104f;
-}
-
-.error-state p {
-  flex-basis: 100%;
-  margin: 0;
-  font-size: 1.25rem;
-  font-weight: 600;
   text-align: center;
 }
 
-.error-state a {
-  color: #174a7e;
-  font-weight: 600;
-  text-decoration-thickness: 0.08em;
-  text-underline-offset: 0.15em;
+.error-icon {
+  color: #5a2a78;
+  font-size: 4rem;
 }
 
-.error-state a:focus-visible {
-  outline: 2px solid #174a7e;
+.error-state p {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+}
+
+.error-state .nav-links {
+  display: flex;
+  width: min(100%, 34rem);
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding: 0.35rem;
+  border: 1px solid #e8e1ed;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 15%);
+  box-shadow: 0 2px 8px rgb(44 13 64 / 6%);
+}
+
+.error-state .nav-link {
+  --link-hover-start: #5c2084;
+  --link-hover-end: #8736ad;
+
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 1.25rem;
+  border-radius: 999px;
+  background: transparent;
+  color: #35104f;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease,
+    filter 160ms ease;
+}
+
+.error-state .nav-link--matches {
+  --link-hover-start: #1b70b2;
+  --link-hover-end: #2b9dca;
+}
+
+.error-state .nav-link:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, var(--link-hover-start), var(--link-hover-end));
+  box-shadow: 0 4px 10px rgb(44 13 64 / 18%);
+  color: #fff;
+}
+
+.error-state .nav-link:active {
+  transform: scale(0.97);
+  background: #174a7e;
+  filter: brightness(0.85);
+  color: #fff;
+}
+
+.error-state .nav-link:focus-visible {
+  outline: 3px solid #174a7e;
   outline-offset: 3px;
 }
 
 @media (max-width: 38rem) {
+  .error-state .nav-links {
+    gap: 0.35rem;
+    border-radius: 1.25rem;
+  }
+
+  .error-state .nav-link {
+    padding-inline: 0.9rem;
+    font-size: 0.95rem;
+  }
+
   .gameweek-navigation {
     grid-template-columns: 2.25rem auto 2.25rem;
     gap: 0.5rem;
@@ -322,7 +389,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gameweek-arrow {
+  .gameweek-arrow,
+  .error-state .nav-link {
     transition: none;
   }
 
@@ -332,6 +400,11 @@
 
   .gameweek-arrow:hover,
   .gameweek-arrow:active {
+    transform: none;
+  }
+
+  .error-state .nav-link:hover,
+  .error-state .nav-link:active {
     transform: none;
   }
 }

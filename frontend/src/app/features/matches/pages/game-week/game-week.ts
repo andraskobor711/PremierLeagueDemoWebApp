@@ -6,6 +6,7 @@ import {
   faCalendarXmark,
   faChevronLeft,
   faChevronRight,
+  faFileCircleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { Match, MatchService } from '../../services/match-service';
@@ -35,6 +36,7 @@ type GameWeekState =
   templateUrl: './game-week.html',
 })
 export class GameWeek {
+  readonly errorIcon = faFileCircleExclamation;
   readonly noMatchesIcon = faCalendarXmark;
   readonly previousGameWeekIcon = faChevronLeft;
   readonly nextGameWeekIcon = faChevronRight;

@@ -98,18 +98,28 @@
     @case ('invalid-query') {
       <main class="game-week-page">
         <section class="error-state" role="alert">
+          <fa-icon class="error-icon" [icon]="errorIcon" aria-hidden="true" />
           <p>Something went wrong.</p>
-          <a routerLink="/home">Return to home</a>
-          <a routerLink="/matches/current-gameweek">View the current gameweek</a>
+          <nav class="nav-links" aria-label="Helpful links">
+            <a class="nav-link" routerLink="/home">Return to home</a>
+            <a class="nav-link nav-link--matches" routerLink="/matches/current-gameweek">
+              View the current gameweek
+            </a>
+          </nav>
         </section>
       </main>
     }
     @case ('load-error') {
       <main class="game-week-page">
         <section class="error-state" role="alert">
+          <fa-icon class="error-icon" [icon]="errorIcon" aria-hidden="true" />
           <p>Something went wrong.</p>
-          <a routerLink="/home">Return to home</a>
-          <a routerLink="/matches/current-gameweek">View the current gameweek</a>
+          <nav class="nav-links" aria-label="Helpful links">
+            <a class="nav-link" routerLink="/home">Return to home</a>
+            <a class="nav-link nav-link--matches" routerLink="/matches/current-gameweek">
+              View the current gameweek
+            </a>
+          </nav>
         </section>
       </main>
     }
