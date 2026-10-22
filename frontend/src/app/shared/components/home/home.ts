@@ -19,6 +19,6 @@ export class Home {
   }
 
   goToMatches() {
-    this.router.navigate(['/matches']);
+    this.router.navigate(['/matches/current-gameweek']);
   }
 }
