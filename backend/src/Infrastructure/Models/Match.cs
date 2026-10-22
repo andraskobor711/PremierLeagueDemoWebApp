@@ -18,7 +18,7 @@ public class Match
     public int AwayTeamId { get; set; }
     public virtual Team AwayTeam { get; set; } = null!;
 
-    public int? Matchweek { get; set; }
+    public int? GameWeekNumber { get; set; }
 
     public DateTime KickoffAt { get; set; }
 
