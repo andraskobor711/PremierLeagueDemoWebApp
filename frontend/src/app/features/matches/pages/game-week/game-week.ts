@@ -16,7 +16,7 @@ interface MatchDayGroup {
   matches: Match[];
 }
 
-type MatchWeekState =
+type GameWeekState =
   | { status: 'loading' }
   | {
       status: 'loaded';
@@ -30,11 +30,11 @@ type MatchWeekState =
 
 @Component({
   imports: [AsyncPipe, DatePipe, FontAwesomeModule, RouterLink],
-  selector: 'app-match-week',
-  styleUrl: './match-week.css',
-  templateUrl: './match-week.html',
+  selector: 'app-game-week',
+  styleUrl: './game-week.css',
+  templateUrl: './game-week.html',
 })
-export class MatchWeek {
+export class GameWeek {
   readonly noMatchesIcon = faCalendarXmark;
   readonly previousGameWeekIcon = faChevronLeft;
   readonly nextGameWeekIcon = faChevronRight;
@@ -52,7 +52,7 @@ export class MatchWeek {
       const gameWeekParam = params.get('gameWeek');
 
       if (seasonIdParam === null || gameWeekParam === null) {
-        return of({ status: 'invalid-query' } satisfies MatchWeekState);
+        return of({ status: 'invalid-query' } satisfies GameWeekState);
       }
 
       const seasonId = Number(seasonIdParam);
@@ -66,7 +66,7 @@ export class MatchWeek {
         !Number.isSafeInteger(gameWeek) ||
         gameWeek <= 0
       ) {
-        return of({ status: 'invalid-query' } satisfies MatchWeekState);
+        return of({ status: 'invalid-query' } satisfies GameWeekState);
       }
 
       return this.loadMatches(
@@ -79,14 +79,14 @@ export class MatchWeek {
   private loadMatches(
     matches$: Observable<Match[]>,
     context?: { seasonId: number; gameWeek: number }
-  ): Observable<MatchWeekState> {
+  ): Observable<GameWeekState> {
     return matches$.pipe(
       map(matches => this.toLoadedState(matches, context)),
       catchError((error: unknown) => {
         console.error('Failed to load matches.', error);
-        return of({ status: 'load-error' } satisfies MatchWeekState);
+        return of({ status: 'load-error' } satisfies GameWeekState);
       }),
-      startWith({ status: 'loading' } satisfies MatchWeekState)
+      startWith({ status: 'loading' } satisfies GameWeekState)
     );
   }
 
@@ -101,7 +101,7 @@ export class MatchWeek {
   private toLoadedState(
     matches: Match[],
     context?: { seasonId: number; gameWeek: number }
-  ): MatchWeekState {
+  ): GameWeekState {
     const groups = new Map<string, MatchDayGroup>();
 
     for (const match of matches) {

@@ -1,7 +1,7 @@
 @if (state$ | async; as state) {
   @switch (state.status) {
     @case ('loading') {
-      <main class="match-week-page">
+      <main class="game-week-page">
         <div class="loading-state">
           <span class="loading-spinner" aria-hidden="true"></span>
           <p class="status-message" role="status">Loading matches...</p>
@@ -9,8 +9,8 @@
       </main>
     }
     @case ('loaded') {
-      <main class="match-week-page">
-        <header class="match-week-heading">
+      <main class="game-week-page">
+        <header class="game-week-heading">
           @if (state.seasonLabel) {
             <p class="season-label">{{ state.seasonLabel }}</p>
           }
@@ -96,7 +96,7 @@
       </main>
     }
     @case ('invalid-query') {
-      <main class="match-week-page">
+      <main class="game-week-page">
         <section class="error-state" role="alert">
           <p>Something went wrong.</p>
           <a routerLink="/home">Return to home</a>
@@ -105,7 +105,7 @@
       </main>
     }
     @case ('load-error') {
-      <main class="match-week-page">
+      <main class="game-week-page">
         <section class="error-state" role="alert">
           <p>Something went wrong.</p>
           <a routerLink="/home">Return to home</a>

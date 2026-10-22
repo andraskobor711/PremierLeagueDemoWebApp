@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
 import { MatchService } from '../../services/match-service';
-import { MatchWeek } from './match-week';
+import { GameWeek } from './game-week';
 
-describe('MatchWeek', () => {
-  let component: MatchWeek;
-  let fixture: ComponentFixture<MatchWeek>;
+describe('GameWeek', () => {
+  let component: GameWeek;
+  let fixture: ComponentFixture<GameWeek>;
   const matchService = {
     getCurrentGameWeekMatches: vi.fn(() => of([])),
     getMatchesByGameWeek: vi.fn(() => of([])),
@@ -15,7 +15,7 @@ describe('MatchWeek', () => {
   beforeEach(async () => {
     matchService.getMatchesByGameWeek.mockClear();
     await TestBed.configureTestingModule({
-      imports: [MatchWeek],
+      imports: [GameWeek],
       providers: [
         {
           provide: ActivatedRoute,
@@ -28,7 +28,7 @@ describe('MatchWeek', () => {
       ],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MatchWeek);
+    fixture = TestBed.createComponent(GameWeek);
     component = fixture.componentInstance;
     fixture.detectChanges();
     await fixture.whenStable();
