@@ -1,0 +1,35 @@
+@if (state$ | async; as state) {
+  @switch (state.status) {
+    @case ('loading') {
+      <main class="edit-match-page">
+        <p class="page-status" role="status">Loading match...</p>
+      </main>
+    }
+    @case ('loaded') {
+      <main class="edit-match-page">
+        <header class="page-heading">
+          <h1>Edit match</h1>
+          <p>{{ state.match.homeTeamName }} vs {{ state.match.awayTeamName }}</p>
+        </header>
+        <app-match-form
+          [season]="state.season"
+          [teams]="state.teams"
+          [initialMatch]="state.match"
+          [editing]="true"
+          [submitting]="isSubmitting"
+          [submitError]="submitError"
+          (matchSubmit)="onSubmit($event, state.match.id)"
+        />
+      </main>
+    }
+    @case ('load-error') {
+      <main class="edit-match-page">
+        <section class="page-error" role="alert">
+          <h1>Match unavailable</h1>
+          <p>The match could not be loaded. It may no longer exist.</p>
+          <a routerLink="/matches/current-gameweek">Return to matches</a>
+        </section>
+      </main>
+    }
+  }
+}

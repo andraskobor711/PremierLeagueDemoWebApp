@@ -1,0 +1,71 @@
+:host {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  background: linear-gradient(135deg, #f5effa 0%, #edf5ff 55%, #e5f1ff 100%);
+}
+
+:host::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: url('/PremierLeague.png') center / clamp(16rem, 42vw, 32rem) auto no-repeat;
+  content: '';
+  opacity: 0.07;
+}
+
+.edit-match-page {
+  box-sizing: border-box;
+  width: min(100%, 52rem);
+  flex: 1;
+  margin-inline: auto;
+  padding: clamp(1rem, 4vw, 2.5rem);
+}
+
+.page-heading {
+  margin-bottom: 1.5rem;
+  color: #35104f;
+  text-align: center;
+}
+
+.page-heading h1,
+.page-error h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.page-heading p,
+.page-error p {
+  margin: 0.5rem 0 0;
+  color: #51465a;
+  font-size: 1.1rem;
+}
+
+.page-status,
+.page-error {
+  padding: 2rem 1rem;
+  color: #51465a;
+  text-align: center;
+}
+
+.page-error h1 {
+  color: #35104f;
+}
+
+.page-error a {
+  display: inline-flex;
+  margin-top: 1rem;
+  padding: 0.7rem 1.25rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #1b70b2, #2b9dca);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.page-error a:focus-visible {
+  outline: 3px solid #174a7e;
+  outline-offset: 3px;
+}

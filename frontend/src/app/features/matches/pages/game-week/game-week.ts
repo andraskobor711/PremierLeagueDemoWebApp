@@ -7,6 +7,8 @@ import {
   faChevronLeft,
   faChevronRight,
   faFileCircleExclamation,
+  faPenToSquare,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { Match, MatchService } from '../../services/match-service';
@@ -38,6 +40,8 @@ type GameWeekState =
 export class GameWeek {
   readonly errorIcon = faFileCircleExclamation;
   readonly noMatchesIcon = faCalendarXmark;
+  readonly createMatchIcon = faPlus;
+  readonly editMatchIcon = faPenToSquare;
   readonly previousGameWeekIcon = faChevronLeft;
   readonly nextGameWeekIcon = faChevronRight;
   readonly maxGameWeek = 38;

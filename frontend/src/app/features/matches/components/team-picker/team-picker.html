@@ -1,0 +1,43 @@
+<div class="team-picker">
+  <span class="team-picker-label" [id]="name + '-label'">{{ label }}</span>
+  <details #picker class="team-picker-details" (keydown)="onKeydown($event)">
+    <summary
+      class="team-picker-trigger"
+      [class.placeholder]="selectedTeam === undefined"
+      [attr.aria-labelledby]="name + '-label ' + name + '-selected'"
+      [attr.aria-disabled]="disabled"
+      [attr.tabindex]="disabled ? -1 : 0"
+    >
+      <span [id]="name + '-selected'">
+        @if (selectedTeam; as team) {
+          <img [src]="team.logoPath" alt="" (error)="onLogoError($event)" />
+          <span>{{ team.usedName }}</span>
+        } @else {
+          Select {{ label.toLowerCase() }}
+        }
+      </span>
+    </summary>
+
+    <div class="team-picker-options">
+      <fieldset [disabled]="disabled">
+        <legend class="visually-hidden">Select {{ label.toLowerCase() }}</legend>
+        @for (team of teams; track team.id) {
+          <div class="team-picker-option">
+            <input
+              type="radio"
+              [id]="name + '-' + team.id"
+              [name]="name"
+              [value]="team.id"
+              [checked]="team.id === value"
+              (change)="selectTeam(team.id)"
+            />
+            <label [for]="name + '-' + team.id">
+              <img [src]="team.logoPath" alt="" (error)="onLogoError($event)" />
+              <span>{{ team.usedName }}</span>
+            </label>
+          </div>
+        }
+      </fieldset>
+    </div>
+  </details>
+</div>
