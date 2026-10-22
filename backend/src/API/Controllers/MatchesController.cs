@@ -11,6 +11,7 @@ namespace PremierLeagueWebApi.API.Controllers;
 public class MatchesController(IMatchManager _matchManager) : ControllerBase
 {
     [HttpGet]
+    [Route("all")]
     [Produces("application/json")]
     [ProducesResponseType(typeof(List<MatchSchema>), StatusCodes.Status200OK)]
     public async Task<ActionResult<List<MatchSchema>>> GetAllMatches()
@@ -34,12 +35,12 @@ public class MatchesController(IMatchManager _matchManager) : ControllerBase
     }
 
     [HttpGet]
-    [Route("by-gameweek")]
     [Produces("application/json")]
     public async Task<ActionResult<List<MatchSchema>>> GetMatchesByGameWeek(
         [FromQuery] int seasonId,
         [FromQuery] int gameWeek)
     {
+        // todo: create detailed query parameter validation
         List<Match> matches = [.. await _matchManager.GetMatchesByGameWeek(seasonId, gameWeek)];
         return Ok(matches.Adapt<List<MatchSchema>>());
     }
@@ -47,10 +48,19 @@ public class MatchesController(IMatchManager _matchManager) : ControllerBase
     [HttpGet]
     [Route("current-gameweek")]
     [Produces("application/json")]
-    public async Task<ActionResult<int>> GetCurrentGameWeek()
+    public async Task<ActionResult<List<MatchSchema>>> GetCurrentGameWeekMatches()
     {
-        int currentGameWeek = await _matchManager.GetCurrentGameWeek();
-        return Ok(currentGameWeek);
+        List<Match> matches = [.. await _matchManager.GetCurrentGameWeekMatches()];
+        return Ok(matches.Adapt<List<MatchSchema>>());
+    }
+
+    [HttpGet]
+    [Route("gameweek/current")]
+    [Produces("application/json")]
+    public async Task<ActionResult<GameWeekSchema>> GetCurrentGameWeek()
+    {
+        var currentGameWeek = await _matchManager.GetCurrentGameWeek();
+        return Ok(currentGameWeek.Adapt<GameWeekSchema>());
     }
 
     [HttpPost]

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 using PremierLeagueWebApi.Infrastructure.Models;
 
 namespace PremierLeagueWebApi.Infrastructure;
@@ -47,6 +48,16 @@ public class PlContext(DbContextOptions<PlContext> options) : DbContext(options)
 
         modelBuilder.Entity<Match>(entity =>
         {
+            entity.Property(m => m.KickoffAt)
+                  .HasConversion(
+                      value => value.ToUniversalTime().ToString("O", CultureInfo.InvariantCulture),
+                      value => DateTimeOffset.Parse(
+                          value,
+                          CultureInfo.InvariantCulture,
+                          DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal)
+                          .UtcDateTime)
+                  .HasColumnType("TEXT");
+
             entity.HasOne(m => m.Season)
                   .WithMany()
                   .HasForeignKey(m => m.SeasonId)

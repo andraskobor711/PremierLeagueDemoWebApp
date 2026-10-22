@@ -34,7 +34,7 @@ public class MatchRepository(PlContext _plContext) : IMatchRepository
             .Include(m => m.HomeTeam)
             .Include(m => m.AwayTeam)
             .Include(m => m.Season)
-            .Where(m => m.SeasonId == seasonId && m.Matchweek == gameWeek)
+            .Where(m => m.SeasonId == seasonId && m.GameWeekNumber == gameWeek)
             .ToListAsync(cancellationToken ?? CancellationToken.None);
 
     public async Task<int> Add(Match match, CancellationToken? cancellationToken = null)
@@ -60,7 +60,7 @@ public class MatchRepository(PlContext _plContext) : IMatchRepository
         existingMatch.HomeTeamId = matchUpdate.HomeTeamId;
         existingMatch.AwayTeamId = matchUpdate.AwayTeamId;
         existingMatch.SeasonId = matchUpdate.SeasonId;
-        existingMatch.Matchweek = matchUpdate.Matchweek;
+        existingMatch.GameWeekNumber = matchUpdate.GameWeekNumber;
         existingMatch.KickoffAt = matchUpdate.KickoffAt;
         existingMatch.HomeScore = matchUpdate.HomeScore;
         existingMatch.AwayScore = matchUpdate.AwayScore;

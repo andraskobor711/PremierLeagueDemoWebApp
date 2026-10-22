@@ -8,7 +8,7 @@ public record CreateMatchSchema
 
     public required int AwayTeamId { get; init; }
 
-    public required int Matchweek { get; init; }
+    public required int GameWeekNumber { get; init; }
 
     public required DateTime KickoffAt { get; init; }
 
