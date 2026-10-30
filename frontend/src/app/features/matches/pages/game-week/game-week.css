@@ -276,6 +276,10 @@
   text-align: center;
 }
 
+.score-separator {
+  text-align: center;
+}
+
 .status-message {
   padding: 1rem;
   color: #51465a;

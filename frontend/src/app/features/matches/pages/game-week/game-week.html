@@ -87,9 +87,9 @@
                             (error)="onLogoError($event)"
                           />
                         </div>
-                        <span class="score">{{ match.homeScore ?? '–' }}</span>
+                        <span class="score">{{ match.homeScore ?? '' }}</span>
                         <span class="score-separator" aria-hidden="true">-</span>
-                        <span class="score">{{ match.awayScore ?? '–' }}</span>
+                        <span class="score">{{ match.awayScore ?? '' }}</span>
                         <div class="away-team">
                           <img
                             [src]="match.awayTeamLogoSrc ? '/TeamLogos/' + match.awayTeamLogoSrc + '.png' : fallbackTeamLogoPath"
