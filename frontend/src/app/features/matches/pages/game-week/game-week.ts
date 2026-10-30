@@ -10,9 +10,10 @@ import {
   faPenToSquare,
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
-import { catchError, forkJoin, map, Observable, of, startWith, switchMap } from 'rxjs';
+import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { Match, MatchService } from '../../services/match-service';
 import { SeasonsService } from '../../services/season-service';
+import { Season } from '../../models/season';
 import { FALLBACK_TEAM_LOGO_PATH } from '../../../teams/services/teams-service';
 
 interface MatchDayGroup {
@@ -88,15 +89,16 @@ export class GameWeek {
   private loadMatches(
     matches$: Observable<Match[]>,
     context?: { seasonId: number; gameWeek: number },
-    season$?: Observable<{ label: string }>
+    season$?: Observable<Season>
   ): Observable<GameWeekState> {
-    const loadedState$ = season$
-      ? forkJoin({ matches: matches$, season: season$ }).pipe(
-          map(({ matches, season }) => this.toLoadedState(matches, context, season.label))
-        )
-      : matches$.pipe(map(matches => this.toLoadedState(matches, context)));
+    return matches$.pipe(
+      switchMap(matches => {
+        if (matches.length > 0 || !season$) {
+          return of(this.toLoadedState(matches, context));
+        }
 
-    return loadedState$.pipe(
+        return season$.pipe(map(season => this.toLoadedState(matches, context, season.label)));
+      }),
       catchError((error: unknown) => {
         console.error('Failed to load matches.', error);
         return of({ status: 'load-error' } satisfies GameWeekState);
