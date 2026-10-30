@@ -2,6 +2,7 @@ using Mapster;
 using Microsoft.EntityFrameworkCore;
 using PremierLeagueWebApi.Core.Managers;
 using PremierLeagueWebApi.Core.Repositories;
+using PremierLeagueWebApi.Core.Services;
 using PremierLeagueWebApi.Infrastructure;
 using System.Reflection;
 
@@ -38,6 +39,10 @@ builder.Services.AddScoped<IMatchRepository, MatchRepository>();
 // BLL Managers
 builder.Services.AddScoped<IMatchManager, MatchManager>();
 builder.Services.AddScoped<ISeasonManager, SeasonManager>();
+builder.Services.AddScoped<ITableManager, TableManager>();
+
+// BLL Servies
+builder.Services.AddScoped<ITableService, TableService>();
 
 builder.Services.AddControllersWithViews();
 

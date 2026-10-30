@@ -4,7 +4,7 @@ namespace PremierLeagueWebApi.Core.Managers;
 
 public interface ISeasonManager
 {
-    Task<Season?> GetSeasonById(int id);
+    Task<Season> GetSeasonById(int id);
 
-    Task<Season?> GetCurrentSeason();
+    Task<Season> GetCurrentSeason();
 }

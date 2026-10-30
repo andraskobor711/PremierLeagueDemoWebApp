@@ -20,6 +20,15 @@ public class MatchRepository(PlContext _plContext) : IMatchRepository
             .Where(m => m.SeasonId == seasonId)
             .ToListAsync(cancellationToken ?? CancellationToken.None);
 
+    public async Task<IEnumerable<Match>> GetBySeason(int seasonId, CancellationToken? cancellationToken = null)
+        => await _plContext
+            .Matches
+            .Where(m => m.SeasonId == seasonId)
+            .Include(m => m.HomeTeam)
+            .Include(m => m.AwayTeam)
+            .Include(m => m.Season)
+            .ToListAsync(cancellationToken ?? CancellationToken.None);
+
     public async Task<Match?> GetById(int id, CancellationToken? cancellationToken)
         => await _plContext
             .Matches
