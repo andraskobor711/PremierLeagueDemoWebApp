@@ -6,6 +6,8 @@ public record TableRowSchema
 
     public required string TeamName { get; set; }
 
+    public string? LogoSrc { get; set; }
+
     public int GamesPlayed { get; set; }
 
     public int Wins { get; set; }

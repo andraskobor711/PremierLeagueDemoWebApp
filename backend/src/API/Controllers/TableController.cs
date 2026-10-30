@@ -23,4 +23,17 @@ public class TableController(ITableManager _tableManager, ISeasonManager _season
 
         return Ok(table.Adapt<TableSchema>());
     }
+
+    [HttpGet]
+    [Route("current")]
+    [Produces("application/json")]
+    [ProducesResponseType(typeof(TableSchema), StatusCodes.Status200OK)]
+    public async Task<ActionResult<TableSchema>> GetCurrentSeasonTable()
+    {
+        var currentSeason = await _seasonManager.GetCurrentSeason();
+
+        var table = await _tableManager.GetTableBySeason(currentSeason.Id);
+
+        return Ok(table.Adapt<TableSchema>());
+    }
 }

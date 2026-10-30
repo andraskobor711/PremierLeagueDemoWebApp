@@ -72,6 +72,13 @@
   --button-hover-end: #2b9dca;
 }
 
+.home-button--tables {
+  --button-start: #197342;
+  --button-end: #26995c;
+  --button-hover-start: #21864f;
+  --button-hover-end: #31ad6c;
+}
+
 .home-button:hover {
   transform: translateY(-4px);
   background: linear-gradient(135deg, var(--button-hover-start), var(--button-hover-end));

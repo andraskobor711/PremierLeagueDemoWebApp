@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCalendarCheck, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarCheck, faTableCellsLarge, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   imports: [FontAwesomeModule],
@@ -13,6 +13,7 @@ export class Home {
   private readonly router = inject(Router);
   readonly faUsers = faUsers;
   readonly faCalendarCheck = faCalendarCheck;
+  readonly faTableCellsLarge = faTableCellsLarge;
 
   goToTeams() {
     this.router.navigate(['/teams']);
@@ -20,5 +21,9 @@ export class Home {
 
   goToMatches() {
     this.router.navigate(['/matches/current-gameweek']);
+  }
+
+  goToTables() {
+    this.router.navigate(['/tables/current-season']);
   }
 }

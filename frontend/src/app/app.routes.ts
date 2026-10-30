@@ -7,6 +7,7 @@ import { TeamDetail } from './features/teams/pages/team-detail/team-detail';
 import { GameWeek } from './features/matches/pages/game-week/game-week';
 import { CreateMatch } from './features/matches/pages/create-match/create-match';
 import { EditMatch } from './features/matches/pages/edit-match/edit-match';
+import { TeamsTable } from './features/tables/pages/teams-table/teams-table';
 
 const redirectMatchesWithoutQueryParams: CanActivateFn = route => {
     if (Object.keys(route.queryParams).length > 0) {
@@ -24,6 +25,7 @@ export const routes: Routes = [
     { path: 'matches/new', component: CreateMatch },
     { path: 'matches/:id/edit', component: EditMatch },
     { path: 'matches', component: GameWeek, canActivate: [redirectMatchesWithoutQueryParams] },
+    { path: 'tables/current-season', component: TeamsTable },
 
     // default route
     { path: '', redirectTo: 'home', pathMatch: 'full' },
