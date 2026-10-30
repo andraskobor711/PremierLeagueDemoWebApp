@@ -11,4 +11,8 @@ export class SeasonsService {
     getCurrentSeason(): Observable<Season> {
         return this.seasonsClient.get<Season>(`${environment.plApiBaseUrl}/seasons/current`);
     }
+
+    getSeasonById(id: number): Observable<Season> {
+        return this.seasonsClient.get<Season>(`${environment.plApiBaseUrl}/seasons/${id}`);
+    }
 }

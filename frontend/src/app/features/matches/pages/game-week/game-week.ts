@@ -10,8 +10,9 @@ import {
   faPenToSquare,
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
-import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
+import { catchError, forkJoin, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { Match, MatchService } from '../../services/match-service';
+import { SeasonsService } from '../../services/season-service';
 import { FALLBACK_TEAM_LOGO_PATH } from '../../../teams/services/teams-service';
 
 interface MatchDayGroup {
@@ -47,6 +48,7 @@ export class GameWeek {
   readonly maxGameWeek = 38;
   private readonly route = inject(ActivatedRoute);
   private readonly matchService = inject(MatchService);
+  private readonly seasonsService = inject(SeasonsService);
   private readonly fallbackTeamLogoPath = FALLBACK_TEAM_LOGO_PATH;
   readonly state$ = this.route.queryParamMap.pipe(
     switchMap(params => {
@@ -77,17 +79,24 @@ export class GameWeek {
 
       return this.loadMatches(
         this.matchService.getMatchesByGameWeek(seasonId, gameWeek),
-        { seasonId, gameWeek }
+        { seasonId, gameWeek },
+        this.seasonsService.getSeasonById(seasonId)
       );
     })
   );
 
   private loadMatches(
     matches$: Observable<Match[]>,
-    context?: { seasonId: number; gameWeek: number }
+    context?: { seasonId: number; gameWeek: number },
+    season$?: Observable<{ label: string }>
   ): Observable<GameWeekState> {
-    return matches$.pipe(
-      map(matches => this.toLoadedState(matches, context)),
+    const loadedState$ = season$
+      ? forkJoin({ matches: matches$, season: season$ }).pipe(
+          map(({ matches, season }) => this.toLoadedState(matches, context, season.label))
+        )
+      : matches$.pipe(map(matches => this.toLoadedState(matches, context)));
+
+    return loadedState$.pipe(
       catchError((error: unknown) => {
         console.error('Failed to load matches.', error);
         return of({ status: 'load-error' } satisfies GameWeekState);
@@ -106,7 +115,8 @@ export class GameWeek {
 
   private toLoadedState(
     matches: Match[],
-    context?: { seasonId: number; gameWeek: number }
+    context?: { seasonId: number; gameWeek: number },
+    seasonLabel?: string
   ): GameWeekState {
     const groups = new Map<string, MatchDayGroup>();
 
@@ -126,7 +136,7 @@ export class GameWeek {
     return {
       status: 'loaded',
       seasonId: matches[0]?.seasonId ?? context?.seasonId ?? null,
-      seasonLabel: matches[0]?.seasonLabel ?? null,
+      seasonLabel: matches[0]?.seasonLabel ?? seasonLabel ?? null,
       gameWeekNumber: matches[0]?.gameWeekNumber ?? context?.gameWeek ?? null,
       days: [...groups.values()]
     };
