@@ -14,6 +14,7 @@ public class TableMappings : IRegister
             .Map(dest => dest.Rows, src => src.SortedRows);
 
         config.NewConfig<TableRow, TableRowSchema>()
-            .Map(dest => dest.TeamName, src => src.Team.UsedName);
+            .Map(dest => dest.TeamName, src => src.Team.UsedName)
+            .Map(dest => dest.LogoSrc, src => src.Team.LogoSrc);
     }
 }

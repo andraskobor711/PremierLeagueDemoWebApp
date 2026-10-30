@@ -1,0 +1,262 @@
+:host {
+  position: relative;
+  isolation: isolate;
+  display: block;
+  flex: 1;
+  background: linear-gradient(135deg, #f5effa 0%, #edf5ff 55%, #e5f1ff 100%);
+}
+
+:host::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: url('/PremierLeague.png') center / clamp(16rem, 42vw, 32rem) auto no-repeat;
+  content: '';
+  opacity: 0.07;
+}
+
+.table-page {
+  box-sizing: border-box;
+  width: min(100%, 80rem);
+  min-height: 100%;
+  margin-inline: auto;
+  padding: clamp(1rem, 4vw, 2.5rem);
+}
+
+.table-heading {
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  color: #35104f;
+  text-align: center;
+}
+
+.season-label {
+  margin: 0 0 0.25rem;
+  color: #51465a;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 600;
+}
+
+.table-heading h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.table-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.75rem;
+}
+
+.reset-sort-button,
+.sort-button {
+  border: 0;
+  color: #35104f;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+
+.reset-sort-button {
+  padding: 0.55rem 1rem;
+  border: 1px solid rgb(90 42 120 / 35%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 55%);
+  transition:
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
+}
+
+.reset-sort-button:hover:not(:disabled) {
+  background: #5a2a78;
+  box-shadow: 0 3px 8px rgb(44 13 64 / 14%);
+  color: #fff;
+}
+
+.reset-sort-button:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+.reset-sort-button:focus-visible,
+.sort-button:focus-visible {
+  outline: 3px solid #174a7e;
+  outline-offset: 3px;
+}
+
+.table-card {
+  overflow: hidden;
+  border: 1px solid #8b7897;
+  border-radius: 0.75rem;
+  background: rgb(255 255 255 / 55%);
+  box-shadow: 0 2px 6px rgb(44 13 64 / 8%);
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.table-scroll:focus-visible {
+  outline: 3px solid #174a7e;
+  outline-offset: 3px;
+}
+
+table {
+  width: 100%;
+  min-width: 48rem;
+  border-collapse: collapse;
+  color: #35104f;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+
+thead {
+  background: rgb(255 255 255 / 70%);
+  color: #35104f;
+}
+
+th,
+td {
+  padding: 0.85rem clamp(0.5rem, 1.5vw, 1rem);
+  border-bottom: 1px solid rgb(139 120 151 / 30%);
+  white-space: nowrap;
+}
+
+thead th {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.sort-button {
+  padding: 0;
+  background: transparent;
+}
+
+.sort-button:hover {
+  color: #5a2a78;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.sort-indicator {
+  margin-left: 0.25rem;
+  color: #5a2a78;
+  font-size: 0.75em;
+}
+
+.team-column,
+.team-cell {
+  text-align: left;
+}
+
+.team-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-weight: 600;
+}
+
+.team-logo {
+  display: block;
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+}
+
+tbody tr:nth-child(even) {
+  background: rgb(255 255 255 / 38%);
+}
+
+tbody tr:last-child th,
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.position-cell {
+  color: #51465a;
+  font-weight: 600;
+}
+
+.points-cell {
+  color: #173b63;
+  font-weight: 700;
+}
+
+.loading-state,
+.empty-state,
+.error-state {
+  display: flex;
+  min-height: 40vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  color: #51465a;
+  text-align: center;
+}
+
+.status-message,
+.empty-state p,
+.error-state p {
+  margin: 0;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 600;
+}
+
+.loading-spinner {
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0.3rem solid rgb(90 42 120 / 20%);
+  border-top-color: #5a2a78;
+  border-radius: 50%;
+  animation: loading-spin 800ms linear infinite;
+}
+
+.error-state {
+  color: #35104f;
+}
+
+.home-link {
+  padding: 0.7rem 1.25rem;
+  border: 1px solid rgb(90 42 120 / 35%);
+  border-radius: 999px;
+  background: rgb(255 255 255 / 38%);
+  color: #35104f;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.home-link:hover {
+  background: linear-gradient(135deg, #5c2084, #8736ad);
+  color: #fff;
+}
+
+.home-link:focus-visible {
+  outline: 3px solid #174a7e;
+  outline-offset: 3px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+@keyframes loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner,
+  .reset-sort-button {
+    animation: none;
+    transition: none;
+  }
+}

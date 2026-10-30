@@ -38,8 +38,8 @@
 }
 
 .nav-link {
-  --link-hover-start: #5c2084;
-  --link-hover-end: #8736ad;
+  --link-hover-start: #173b63;
+  --link-hover-end: #245b8a;
 
   display: flex;
   min-width: 6rem;
@@ -59,9 +59,19 @@
     filter 160ms ease;
 }
 
+.nav-link--teams {
+  --link-hover-start: #5c2084;
+  --link-hover-end: #8736ad;
+}
+
 .nav-link--matches {
   --link-hover-start: #1b70b2;
   --link-hover-end: #2b9dca;
+}
+
+.nav-link--tables {
+  --link-hover-start: #21864f;
+  --link-hover-end: #31ad6c;
 }
 
 .nav-link:hover {

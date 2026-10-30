@@ -1,0 +1,162 @@
+@if (state$ | async; as state) {
+  <main class="table-page">
+    <header class="table-heading">
+      @if (state.status === 'loaded') {
+        <p class="season-label">{{ state.seasonLabel }}</p>
+      }
+      <h1>Premier League table</h1>
+    </header>
+
+    @switch (state.status) {
+      @case ('loading') {
+        <div class="loading-state">
+          <span class="loading-spinner" aria-hidden="true"></span>
+          <p class="status-message" role="status">Loading the table...</p>
+        </div>
+      }
+      @case ('loaded') {
+        @if (state.rows.length > 0) {
+          <div class="table-toolbar">
+            <button
+              class="reset-sort-button"
+              type="button"
+              [disabled]="state.sortColumn === null"
+              (click)="resetSort()"
+            >
+              Reset default order
+            </button>
+          </div>
+          <div class="table-card">
+            <div class="table-scroll" tabindex="0" aria-label="Current season standings">
+              <table>
+                <caption class="visually-hidden">
+                  Premier League standings for {{ state.seasonLabel }}
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Position</th>
+                    <th scope="col" class="team-column">Team</th>
+                    <th scope="col">Played</th>
+                    <th
+                      scope="col"
+                      [attr.aria-sort]="state.sortColumn === 'wins' ? state.sortDirection : 'none'"
+                    >
+                      <button class="sort-button" type="button" (click)="sortBy('wins')">
+                        Won
+                        @if (state.sortColumn === 'wins') {
+                          <span class="sort-indicator" aria-hidden="true">
+                            {{ state.sortDirection === 'ascending' ? '▲' : '▼' }}
+                          </span>
+                        }
+                      </button>
+                    </th>
+                    <th
+                      scope="col"
+                      [attr.aria-sort]="state.sortColumn === 'draws' ? state.sortDirection : 'none'"
+                    >
+                      <button class="sort-button" type="button" (click)="sortBy('draws')">
+                        Drawn
+                        @if (state.sortColumn === 'draws') {
+                          <span class="sort-indicator" aria-hidden="true">
+                            {{ state.sortDirection === 'ascending' ? '▲' : '▼' }}
+                          </span>
+                        }
+                      </button>
+                    </th>
+                    <th
+                      scope="col"
+                      [attr.aria-sort]="state.sortColumn === 'losses' ? state.sortDirection : 'none'"
+                    >
+                      <button class="sort-button" type="button" (click)="sortBy('losses')">
+                        Lost
+                        @if (state.sortColumn === 'losses') {
+                          <span class="sort-indicator" aria-hidden="true">
+                            {{ state.sortDirection === 'ascending' ? '▲' : '▼' }}
+                          </span>
+                        }
+                      </button>
+                    </th>
+                    <th
+                      scope="col"
+                      [attr.aria-sort]="state.sortColumn === 'goalsFor' ? state.sortDirection : 'none'"
+                    >
+                      <button class="sort-button" type="button" (click)="sortBy('goalsFor')">
+                        GF
+                        @if (state.sortColumn === 'goalsFor') {
+                          <span class="sort-indicator" aria-hidden="true">
+                            {{ state.sortDirection === 'ascending' ? '▲' : '▼' }}
+                          </span>
+                        }
+                      </button>
+                    </th>
+                    <th
+                      scope="col"
+                      [attr.aria-sort]="state.sortColumn === 'goalsAgainst' ? state.sortDirection : 'none'"
+                    >
+                      <button class="sort-button" type="button" (click)="sortBy('goalsAgainst')">
+                        GA
+                        @if (state.sortColumn === 'goalsAgainst') {
+                          <span class="sort-indicator" aria-hidden="true">
+                            {{ state.sortDirection === 'ascending' ? '▲' : '▼' }}
+                          </span>
+                        }
+                      </button>
+                    </th>
+                    <th
+                      scope="col"
+                      [attr.aria-sort]="state.sortColumn === 'goalDifference' ? state.sortDirection : 'none'"
+                    >
+                      <button class="sort-button" type="button" (click)="sortBy('goalDifference')">
+                        GD
+                        @if (state.sortColumn === 'goalDifference') {
+                          <span class="sort-indicator" aria-hidden="true">
+                            {{ state.sortDirection === 'ascending' ? '▲' : '▼' }}
+                          </span>
+                        }
+                      </button>
+                    </th>
+                    <th scope="col">Points</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (row of state.rows; track row.teamName) {
+                    <tr>
+                      <td class="position-cell">{{ row.position }}</td>
+                      <th scope="row" class="team-cell">
+                        <img
+                          class="team-logo"
+                          [src]="row.logoSrc ? '/TeamLogos/' + row.logoSrc + '.png' : fallbackTeamLogoPath"
+                          alt=""
+                          (error)="onLogoError($event)"
+                        />
+                        <span>{{ row.teamName }}</span>
+                      </th>
+                      <td>{{ row.gamesPlayed }}</td>
+                      <td>{{ row.wins }}</td>
+                      <td>{{ row.draws }}</td>
+                      <td>{{ row.losses }}</td>
+                      <td>{{ row.goalsFor }}</td>
+                      <td>{{ row.goalsAgainst }}</td>
+                      <td>{{ row.goalDifference }}</td>
+                      <td class="points-cell">{{ row.points }}</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        } @else {
+          <section class="empty-state" role="status">
+            <p>There are no standings to show for this season yet.</p>
+          </section>
+        }
+      }
+      @case ('load-error') {
+        <section class="error-state" role="alert">
+          <p>Something went wrong while loading the table.</p>
+          <a class="home-link" routerLink="/home">Return to home</a>
+        </section>
+      }
+    }
+  </main>
+}
