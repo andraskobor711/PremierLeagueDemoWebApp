@@ -1,6 +1,6 @@
 # Premier League Demo
 
-A demo web application for exploring Premier League teams and matches. It showcases an Angular frontend, an ASP.NET Core Web API, and SQLite for local data storage.
+A demo web application for exploring Premier League teams and matches. It showcases an Angular frontend, an ASP.NET Core Web API, and SQLite for local data storage. Please, note this is a demo app, therefore things like user management, unit testing, proper frontend and backend validation, etc. are missing.
 
 The project is currently intended for developers to run locally. The API is hosted on your machine, and the frontend connects to that local API.
 
