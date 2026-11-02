@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authorization;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using PremierLeagueWebApi.API.Schemas.Season;
 using PremierLeagueWebApi.Core.Managers;
+using PremierLeagueWebApi.Core.Security;
 
 namespace PremierLeagueWebApi.API.Controllers;
 
@@ -11,6 +13,7 @@ public class SeasonsController(ISeasonManager _seasonManager) : Controller
 {
     [HttpGet]
     [Route("current")]
+    [Authorize(Policy = AuthorizationClaims.CanReadMatches)]
     [ProducesResponseType(typeof(SeasonSchema), StatusCodes.Status200OK)]
     public async Task<ActionResult<SeasonSchema>> GetCurrentSeason()
     {
@@ -25,6 +28,7 @@ public class SeasonsController(ISeasonManager _seasonManager) : Controller
 
     [HttpGet]
     [Route("{id}")]
+    [Authorize(Policy = AuthorizationClaims.CanReadMatches)]
     [Produces("application/json")]
     [ProducesResponseType(typeof(SeasonSchema), StatusCodes.Status200OK)]
     public async Task<ActionResult<SeasonSchema>> GetSeasonById([FromRoute] int id)

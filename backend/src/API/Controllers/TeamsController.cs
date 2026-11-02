@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Mapster;
 using PremierLeagueWebApi.API.Schemas.Team;
+using PremierLeagueWebApi.Core.Security;
 using PremierLeagueWebApi.Core.Repositories;
 using PremierLeagueWebApi.Infrastructure.Models;
 
@@ -11,6 +13,7 @@ namespace PremierLeagueWebApi.API.Controllers;
 public class TeamsController(ITeamRepository _teamRepository) : ControllerBase
 {
     [HttpGet]
+    [Authorize(Policy = AuthorizationClaims.CanReadTeams)]
     [Produces("application/json")]
     [ProducesResponseType(typeof(List<TeamSchema>), StatusCodes.Status200OK)]
     public async Task<ActionResult<List<TeamSchema>>> GetAllTeams()
@@ -22,6 +25,7 @@ public class TeamsController(ITeamRepository _teamRepository) : ControllerBase
 
     [HttpGet]
     [Route("{id}")]
+    [Authorize(Policy = AuthorizationClaims.CanReadTeams)]
     [Produces("application/json")]
     [ProducesResponseType(typeof(TeamSchema), StatusCodes.Status200OK)]
     public async Task<ActionResult<TeamSchema>> GetTeamById([FromRoute] int id)
@@ -34,6 +38,7 @@ public class TeamsController(ITeamRepository _teamRepository) : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = AuthorizationClaims.CanEditTeams)]
     [Produces("application/json")]
     [ProducesResponseType(typeof(TeamSchema), StatusCodes.Status200OK)]
     public async Task<ActionResult<TeamSchema>> Create([FromBody] CreateTeamSchema createTeamSchema)
@@ -49,6 +54,7 @@ public class TeamsController(ITeamRepository _teamRepository) : ControllerBase
 
     [HttpPut]
     [Route("{id}")]
+    [Authorize(Policy = AuthorizationClaims.CanEditTeams)]
     [Produces("application/json")]
     [ProducesResponseType(typeof(TeamSchema), StatusCodes.Status200OK)]
     public async Task<ActionResult<TeamSchema>> Update([FromRoute] int id, [FromBody] UpdateTeamSchema updateTeamSchema)
@@ -66,6 +72,7 @@ public class TeamsController(ITeamRepository _teamRepository) : ControllerBase
 
     [HttpDelete]
     [Route("{id}")]
+    [Authorize(Policy = AuthorizationClaims.CanEditTeams)]
     public async Task<ActionResult> Delete([FromRoute] int id)
     {
         _ = await _teamRepository.Delete(id);
