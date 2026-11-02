@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Mapster;
 using PremierLeagueWebApi.API.Schemas.Match;
 using PremierLeagueWebApi.Core.Managers;
+using PremierLeagueWebApi.Core.Security;
 using PremierLeagueWebApi.Infrastructure.Models;
 
 namespace PremierLeagueWebApi.API.Controllers;
@@ -12,6 +14,7 @@ public class MatchesController(IMatchManager _matchManager) : ControllerBase
 {
     [HttpGet]
     [Route("all")]
+    [Authorize(Policy = AuthorizationClaims.CanReadMatches)]
     [Produces("application/json")]
     [ProducesResponseType(typeof(List<MatchSchema>), StatusCodes.Status200OK)]
     public async Task<ActionResult<List<MatchSchema>>> GetAllMatches()
@@ -23,6 +26,7 @@ public class MatchesController(IMatchManager _matchManager) : ControllerBase
 
     [HttpGet]
     [Route("{id}")]
+    [Authorize(Policy = AuthorizationClaims.CanReadMatches)]
     [Produces("application/json")]
     [ProducesResponseType(typeof(MatchSchema), StatusCodes.Status200OK)]
     public async Task<ActionResult<MatchSchema>> GetMatchById([FromRoute] int id)
@@ -35,6 +39,7 @@ public class MatchesController(IMatchManager _matchManager) : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Policy = AuthorizationClaims.CanReadMatches)]
     [Produces("application/json")]
     public async Task<ActionResult<List<MatchSchema>>> GetMatchesByGameWeek(
         [FromQuery] int seasonId,
@@ -47,6 +52,7 @@ public class MatchesController(IMatchManager _matchManager) : ControllerBase
 
     [HttpGet]
     [Route("current-gameweek")]
+    [Authorize(Policy = AuthorizationClaims.CanReadMatches)]
     [Produces("application/json")]
     public async Task<ActionResult<List<MatchSchema>>> GetCurrentGameWeekMatches()
     {
@@ -56,6 +62,7 @@ public class MatchesController(IMatchManager _matchManager) : ControllerBase
 
     [HttpGet]
     [Route("gameweek/current")]
+    [Authorize(Policy = AuthorizationClaims.CanReadMatches)]
     [Produces("application/json")]
     public async Task<ActionResult<GameWeekSchema>> GetCurrentGameWeek()
     {
@@ -64,6 +71,7 @@ public class MatchesController(IMatchManager _matchManager) : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Policy = AuthorizationClaims.CanEditMatches)]
     [Produces("application/json")]
     [ProducesResponseType(typeof(MatchSchema), StatusCodes.Status200OK)]
     public async Task<ActionResult<MatchSchema>> Create([FromBody] CreateMatchSchema createMatchSchema)
@@ -75,6 +83,7 @@ public class MatchesController(IMatchManager _matchManager) : ControllerBase
 
     [HttpPut]
     [Route("{id}")]
+    [Authorize(Policy = AuthorizationClaims.CanEditMatches)]
     [Produces("application/json")]
     [ProducesResponseType(typeof(MatchSchema), StatusCodes.Status200OK)]
     public async Task<ActionResult<MatchSchema>> Update([FromRoute] int id, UpdateMatchSchema updateMatchSchema)
@@ -91,6 +100,7 @@ public class MatchesController(IMatchManager _matchManager) : ControllerBase
 
     [HttpDelete]
     [Route("{id}")]
+    [Authorize(Policy = AuthorizationClaims.CanEditMatches)]
     public async Task<ActionResult> Delete([FromRoute] int id)
     {
         _ = await _matchManager.DeleteMatch(id);

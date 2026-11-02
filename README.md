@@ -1,6 +1,6 @@
 # Premier League Demo
 
-A demo web application for exploring Premier League teams and matches. It showcases an Angular frontend, an ASP.NET Core Web API, and SQLite for local data storage. Please, note this is a demo app, therefore things like user management, unit testing, proper frontend and backend validation, etc. are missing.
+A demo web application for exploring Premier League teams and matches. It showcases an Angular frontend, an ASP.NET Core Web API, and SQLite for local data storage. The backend includes JWT authentication and claim-based authorization; frontend login integration and unit tests are not included yet.
 
 The project is currently intended for developers to run locally. The API is hosted on your machine, and the frontend connects to that local API.
 
@@ -32,6 +32,28 @@ dotnet run --project backend/src/PremierLeagueDemoWebApp.csproj
 The ASP.NET Core development server starts the Angular development server as well. Open [https://localhost:57412](https://localhost:57412) in your browser.
 
 The application uses a local SQLite database. Changes made while running the app are stored on your machine.
+
+## Backend authentication
+
+The checked-in SQLite database includes two demo accounts:
+
+| Username | Password | Access |
+| --- | --- | --- |
+| `adminuser` | `admin_p@$$word` | Full system access |
+| `demouser` | `demo_p@$$word` | Read-only access |
+
+Exchange credentials for a JWT with `POST /auth/login`:
+
+```json
+{
+  "username": "demouser",
+  "password": "demo_p@$$word"
+}
+```
+
+Use the returned `accessToken` as a bearer token in the request's `Authorization` header.
+
+Identity stores password hashes in the database. The checked-in JWT signing key and demo accounts are for local development only. Before deploying, configure a private signing key, issuer, and audience through the deployment environment or secret store, and provision production users securely.
 
 ## Live demo
 
