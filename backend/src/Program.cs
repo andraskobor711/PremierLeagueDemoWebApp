@@ -102,17 +102,6 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    await using (var migrationScope = app.Services.CreateAsyncScope())
-    {
-        var dbContext = migrationScope.ServiceProvider.GetRequiredService<PlContext>();
-        await dbContext.Database.MigrateAsync();
-    }
-
-    await using var scope = app.Services.CreateAsyncScope();
-    await IdentityDevelopmentSeeder.SeedAsync(scope.ServiceProvider);
-}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
