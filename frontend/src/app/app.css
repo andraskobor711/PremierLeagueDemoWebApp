@@ -59,6 +59,17 @@
     filter 160ms ease;
 }
 
+.sign-out-button {
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.sign-in-link {
+  border: 1px solid #e8e1ed;
+  background: rgb(255 255 255 / 75%);
+}
+
 .nav-link--teams {
   --link-hover-start: #5c2084;
   --link-hover-end: #8736ad;

@@ -41,8 +41,20 @@ This will compile your project and store the build artifacts in the `dist/` dire
 To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
 
 ```bash
-ng test
+npm test -- frontend
 ```
+
+## Authentication
+
+The app signs in through the API's `/auth/login` endpoint. Access tokens are kept in
+`sessionStorage` for the lifetime of the browser tab, attached only to requests to the
+configured API origin, and removed on expiry, sign-out, or an API `401`. A `403` keeps
+the session and displays the access-denied page.
+
+`sessionStorage` is a usability/security compromise, not protection against cross-site
+scripting: JavaScript running in the app can read the token. For a production deployment
+that needs stronger token isolation, consider a backend-for-frontend with Secure,
+HttpOnly, SameSite cookies and appropriate CSRF protections.
 
 ## Running end-to-end tests
 
