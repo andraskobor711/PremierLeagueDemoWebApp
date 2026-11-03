@@ -71,10 +71,10 @@
           "defaultConfiguration": "development",
           "options": {
             "port": 57412
-          },
-          "test": {
-            "builder": "@angular/build:unit-test"
           }
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
         }
       }
     }

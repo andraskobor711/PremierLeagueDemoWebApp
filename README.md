@@ -1,6 +1,6 @@
 # Premier League Demo
 
-A demo web application for exploring Premier League teams and matches. It showcases an Angular frontend, an ASP.NET Core Web API, and SQLite for local data storage. The backend includes JWT authentication and claim-based authorization; frontend login integration and unit tests are not included yet.
+A demo web application for exploring Premier League teams and matches. It showcases an Angular frontend, an ASP.NET Core Web API, and SQLite for local data storage. The app uses JWT authentication and claim-based authorization.
 
 The project is currently intended for developers to run locally. The API is hosted on your machine, and the frontend connects to that local API.
 
@@ -32,6 +32,10 @@ dotnet run --project backend/src/PremierLeagueDemoWebApp.csproj
 The ASP.NET Core development server starts the Angular development server as well. Open [https://localhost:57412](https://localhost:57412) in your browser.
 
 The application uses a local SQLite database. Changes made while running the app are stored on your machine.
+
+## Login
+
+Sign in through the frontend using one of the demo accounts below. The access token is kept in the current browser tab and cleared when you sign out or the token expires.
 
 ## Backend authentication
 

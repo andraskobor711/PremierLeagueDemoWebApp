@@ -1,0 +1,40 @@
+<main class="login-page">
+  <form class="login-form" [formGroup]="form" (ngSubmit)="submit()">
+    <h1>Sign in</h1>
+    <p>Sign in to access the Premier League demo.</p>
+
+    @if (errorMessage) {
+      <p class="form-error" role="alert">{{ errorMessage }}</p>
+    }
+
+    <label for="username">Username</label>
+    <input
+      id="username"
+      type="text"
+      formControlName="username"
+      autocomplete="username"
+      required
+      [attr.aria-invalid]="form.controls.username.touched && form.controls.username.invalid"
+      [attr.aria-describedby]="form.controls.username.touched && form.controls.username.invalid ? 'username-error' : null">
+    @if (form.controls.username.touched && form.controls.username.hasError('required')) {
+      <p class="field-error" id="username-error">Enter a username.</p>
+    }
+
+    <label for="password">Password</label>
+    <input
+      id="password"
+      type="password"
+      formControlName="password"
+      autocomplete="current-password"
+      required
+      [attr.aria-invalid]="form.controls.password.touched && form.controls.password.invalid"
+      [attr.aria-describedby]="form.controls.password.touched && form.controls.password.invalid ? 'password-error' : null">
+    @if (form.controls.password.touched && form.controls.password.hasError('required')) {
+      <p class="field-error" id="password-error">Enter a password.</p>
+    }
+
+    <button type="submit" [disabled]="isSubmitting">
+      {{ isSubmitting ? 'Signing in…' : 'Sign in' }}
+    </button>
+  </form>
+</main>

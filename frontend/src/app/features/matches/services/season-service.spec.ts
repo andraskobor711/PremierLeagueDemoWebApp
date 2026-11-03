@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { SeasonsService } from './seasons-service';
+import { SeasonsService } from './season-service';
 
 describe('SeasonsService', () => {
   let service: SeasonsService;
