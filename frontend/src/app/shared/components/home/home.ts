@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCalendarCheck, faTableCellsLarge, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
   imports: [FontAwesomeModule],
@@ -11,6 +12,7 @@ import { faCalendarCheck, faTableCellsLarge, faUsers } from '@fortawesome/free-s
 })
 export class Home {
   private readonly router = inject(Router);
+  readonly auth = inject(AuthService);
   readonly faUsers = faUsers;
   readonly faCalendarCheck = faCalendarCheck;
   readonly faTableCellsLarge = faTableCellsLarge;

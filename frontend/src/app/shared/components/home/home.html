@@ -1,18 +1,24 @@
 <main class="home-page">
   <nav class="home-menu" aria-label="Main sections">
-    <button class="home-button home-button--teams" type="button" (click)="goToTeams()">
-      <fa-icon class="home-button-icon" [icon]="faUsers" aria-hidden="true" />
-      <span>Teams</span>
-    </button>
+    @if (auth.hasClaim('CanReadTeams')) {
+      <button class="home-button home-button--teams" type="button" (click)="goToTeams()">
+        <fa-icon class="home-button-icon" [icon]="faUsers" aria-hidden="true" />
+        <span>Teams</span>
+      </button>
+    }
 
-    <button class="home-button home-button--matches" type="button" (click)="goToMatches()">
-      <fa-icon class="home-button-icon" [icon]="faCalendarCheck" aria-hidden="true" />
-      <span>Matches</span>
-    </button>
+    @if (auth.hasClaim('CanReadMatches')) {
+      <button class="home-button home-button--matches" type="button" (click)="goToMatches()">
+        <fa-icon class="home-button-icon" [icon]="faCalendarCheck" aria-hidden="true" />
+        <span>Matches</span>
+      </button>
+    }
 
-    <button class="home-button home-button--tables" type="button" (click)="goToTables()">
-      <fa-icon class="home-button-icon" [icon]="faTableCellsLarge" aria-hidden="true" />
-      <span>Tables</span>
-    </button>
+    @if (auth.hasClaim('CanReadTables')) {
+      <button class="home-button home-button--tables" type="button" (click)="goToTables()">
+        <fa-icon class="home-button-icon" [icon]="faTableCellsLarge" aria-hidden="true" />
+        <span>Tables</span>
+      </button>
+    }
   </nav>
 </main>

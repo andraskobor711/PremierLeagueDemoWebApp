@@ -5,9 +5,15 @@
     </a>
     @if (auth.isAuthenticated()) {
       <ul class="nav-links">
-        <li><a class="nav-link nav-link--teams" routerLink="/teams">Teams</a></li>
-        <li><a class="nav-link nav-link--matches" routerLink="/matches/current-gameweek">Matches</a></li>
-        <li><a class="nav-link nav-link--tables" routerLink="/tables/current-season">Tables</a></li>
+        @if (auth.hasClaim('CanReadTeams')) {
+          <li><a class="nav-link nav-link--teams" routerLink="/teams">Teams</a></li>
+        }
+        @if (auth.hasClaim('CanReadMatches')) {
+          <li><a class="nav-link nav-link--matches" routerLink="/matches/current-gameweek">Matches</a></li>
+        }
+        @if (auth.hasClaim('CanReadTables')) {
+          <li><a class="nav-link nav-link--tables" routerLink="/tables/current-season">Tables</a></li>
+        }
         <li><button class="nav-link sign-out-button" type="button" (click)="signOut()">Sign out</button></li>
       </ul>
     } @else {
@@ -15,6 +21,15 @@
     }
   </div>
 </nav>
+
+@if (auth.isAuthenticated() && !auth.hasClaim('CanEditMatches')) {
+  <aside class="read-only-notice" role="status">
+    <p>
+      You’re using read-only demo access. Match creation and editing are unavailable.
+      To try these features, run the backend locally and sign in with an admin account.
+    </p>
+  </aside>
+}
 
 <div class="app-content">
   <router-outlet></router-outlet>

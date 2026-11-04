@@ -15,14 +15,16 @@
             <p class="season-label">{{ state.seasonLabel }}</p>
           }
           <div class="gameweek-heading-row">
-            <a
-              class="create-match-link"
-              routerLink="/matches/new"
-              [queryParams]="{ gameWeek: state.gameWeekNumber }"
-            >
-              <fa-icon [icon]="createMatchIcon" aria-hidden="true" />
-              <span>Create match</span>
-            </a>
+            @if (canEditMatches) {
+              <a
+                class="create-match-link"
+                routerLink="/matches/new"
+                [queryParams]="{ gameWeek: state.gameWeekNumber }"
+              >
+                <fa-icon [icon]="createMatchIcon" aria-hidden="true" />
+                <span>Create match</span>
+              </a>
+            }
             @if (state.gameWeekNumber !== null) {
               <div class="gameweek-navigation">
                 @if (state.gameWeekNumber > 1 && state.seasonId !== null) {
@@ -67,14 +69,16 @@
                 <ul class="match-list">
                   @for (match of day.matches; track match.id) {
                     <li class="match-card">
-                      <a
-                        class="edit-match-link"
-                        [routerLink]="['/matches', match.id, 'edit']"
-                        [attr.aria-label]="'Edit ' + match.homeTeamName + ' vs ' + match.awayTeamName"
-                        title="Edit match"
-                      >
-                        <fa-icon [icon]="editMatchIcon" aria-hidden="true" />
-                      </a>
+                      @if (canEditMatches) {
+                        <a
+                          class="edit-match-link"
+                          [routerLink]="['/matches', match.id, 'edit']"
+                          [attr.aria-label]="'Edit ' + match.homeTeamName + ' vs ' + match.awayTeamName"
+                          title="Edit match"
+                        >
+                          <fa-icon [icon]="editMatchIcon" aria-hidden="true" />
+                        </a>
+                      }
                       <time class="kickoff-time" [attr.datetime]="match.kickoffAt">
                         {{ match.kickoffAt | date:'shortTime' }}
                       </time>

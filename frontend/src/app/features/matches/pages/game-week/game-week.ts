@@ -15,6 +15,7 @@ import { Match, MatchService } from '../../services/match-service';
 import { SeasonsService } from '../../services/season-service';
 import { Season } from '../../models/season';
 import { FALLBACK_TEAM_LOGO_PATH } from '../../../teams/services/teams-service';
+import { AuthService } from '../../../../core/auth/auth.service';
 
 interface MatchDayGroup {
   date: Date;
@@ -50,7 +51,14 @@ export class GameWeek {
   private readonly route = inject(ActivatedRoute);
   private readonly matchService = inject(MatchService);
   private readonly seasonsService = inject(SeasonsService);
+  readonly auth = inject(AuthService);
   private readonly fallbackTeamLogoPath = FALLBACK_TEAM_LOGO_PATH;
+  get canEditMatches(): boolean {
+    return this.auth.hasClaim('CanEditMatches')
+      && this.auth.hasClaim('CanReadMatches')
+      && this.auth.hasClaim('CanReadTeams');
+  }
+
   readonly state$ = this.route.queryParamMap.pipe(
     switchMap(params => {
       if (this.route.snapshot.routeConfig?.path === 'matches/current-gameweek') {

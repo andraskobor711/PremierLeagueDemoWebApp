@@ -3,6 +3,7 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
 import { MatchService } from '../../services/match-service';
 import { SeasonsService } from '../../services/season-service';
+import { AuthService } from '../../../../core/auth/auth.service';
 import { GameWeek } from './game-week';
 
 describe('GameWeek', () => {
@@ -14,6 +15,9 @@ describe('GameWeek', () => {
   };
   const seasonsService = {
     getSeasonById: vi.fn(() => of({ id: 1, label: '2025/26' })),
+  };
+  const authService = {
+    hasClaim: vi.fn(() => false),
   };
 
   beforeEach(async () => {
@@ -31,6 +35,7 @@ describe('GameWeek', () => {
         },
         { provide: MatchService, useValue: matchService },
         { provide: SeasonsService, useValue: seasonsService },
+        { provide: AuthService, useValue: authService },
       ],
     }).compileComponents();
 
@@ -51,5 +56,9 @@ describe('GameWeek', () => {
   it('displays the season label when the gameweek has no matches', () => {
     expect(seasonsService.getSeasonById).toHaveBeenCalledWith(1);
     expect(fixture.nativeElement.querySelector('.season-label')?.textContent).toContain('2025/26');
+  });
+
+  it('hides the create-match action when the user lacks edit permission', () => {
+    expect(fixture.nativeElement.querySelector('.create-match-link')).toBeNull();
   });
 });
