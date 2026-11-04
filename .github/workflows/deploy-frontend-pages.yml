@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - frontend/hosting_in_github
     paths:
       - frontend/**
       - .github/workflows/deploy-frontend-pages.yml
