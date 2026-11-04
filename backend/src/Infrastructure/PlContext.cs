@@ -1,10 +1,13 @@
 ﻿using System.Globalization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PremierLeagueWebApi.Infrastructure.Models;
 
 namespace PremierLeagueWebApi.Infrastructure;
 
-public class PlContext(DbContextOptions<PlContext> options) : DbContext(options)
+public class PlContext(DbContextOptions<PlContext> options)
+    : IdentityDbContext<IdentityUser, IdentityRole, string>(options)
 {
     public DbSet<Team> Teams { get; set; }
 

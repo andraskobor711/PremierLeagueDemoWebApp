@@ -3,7 +3,7 @@ import { inject, Service } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
-export const FALLBACK_TEAM_LOGO_PATH = '/TeamLogos/PremierLeague.png';
+export const FALLBACK_TEAM_LOGO_PATH = 'TeamLogos/PremierLeague.png';
 
 export interface TeamResponse {
     id: number;
@@ -38,7 +38,7 @@ export class TeamsService {
         return {
             ...team,
             logoPath: team.logoSrc
-                ? `/TeamLogos/${team.logoSrc}.png`
+                ? `TeamLogos/${team.logoSrc}.png`
                 : FALLBACK_TEAM_LOGO_PATH
         };
     }

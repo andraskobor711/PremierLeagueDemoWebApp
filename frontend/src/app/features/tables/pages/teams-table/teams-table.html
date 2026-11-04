@@ -125,7 +125,7 @@
                       <th scope="row" class="team-cell">
                         <img
                           class="team-logo"
-                          [src]="row.logoSrc ? '/TeamLogos/' + row.logoSrc + '.png' : fallbackTeamLogoPath"
+                          [src]="row.logoSrc ? 'TeamLogos/' + row.logoSrc + '.png' : fallbackTeamLogoPath"
                           alt=""
                           (error)="onLogoError($event)"
                         />

@@ -82,7 +82,7 @@
                         <div class="home-team">
                           <span>{{ match.homeTeamName }}</span>
                           <img
-                            [src]="match.homeTeamLogoSrc ? '/TeamLogos/' + match.homeTeamLogoSrc + '.png' : fallbackTeamLogoPath"
+                            [src]="match.homeTeamLogoSrc ? 'TeamLogos/' + match.homeTeamLogoSrc + '.png' : fallbackTeamLogoPath"
                             [alt]="match.homeTeamName + ' logo'"
                             (error)="onLogoError($event)"
                           />
@@ -92,7 +92,7 @@
                         <span class="score">{{ match.awayScore ?? '' }}</span>
                         <div class="away-team">
                           <img
-                            [src]="match.awayTeamLogoSrc ? '/TeamLogos/' + match.awayTeamLogoSrc + '.png' : fallbackTeamLogoPath"
+                            [src]="match.awayTeamLogoSrc ? 'TeamLogos/' + match.awayTeamLogoSrc + '.png' : fallbackTeamLogoPath"
                             [alt]="match.awayTeamName + ' logo'"
                             (error)="onLogoError($event)"
                           />

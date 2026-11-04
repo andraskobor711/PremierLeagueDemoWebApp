@@ -1,0 +1,99 @@
+:host {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  background: linear-gradient(135deg, #f5effa 0%, #edf5ff 55%, #e5f1ff 100%);
+}
+
+:host::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: var(--premier-league-logo) center / clamp(16rem, 42vw, 32rem) auto no-repeat;
+  content: '';
+  opacity: 0.07;
+}
+
+.login-page {
+  box-sizing: border-box;
+  display: grid;
+  flex: 1;
+  place-items: center;
+  padding: 2rem 1rem;
+}
+
+.login-form {
+  display: grid;
+  width: min(100%, 24rem);
+  gap: 0.75rem;
+  padding: 2rem;
+  border: 1px solid #e8e1ed;
+  border-radius: 0.75rem;
+  background: rgb(255 255 255 / 38%);
+  box-shadow: 0 8px 24px rgb(44 13 64 / 8%);
+}
+
+.login-form h1,
+.login-form p {
+  margin: 0;
+}
+
+.login-form h1 {
+  color: #35104f;
+}
+
+.login-form label {
+  margin-top: 0.5rem;
+  color: #35104f;
+  font-weight: 600;
+}
+
+.login-form input {
+  min-width: 0;
+  padding: 0.75rem;
+  border: 1px solid #b9afc0;
+  border-radius: 0.35rem;
+  font: inherit;
+}
+
+.login-form input:focus-visible,
+.login-form button:focus-visible {
+  outline: 3px solid #245b8a;
+  outline-offset: 2px;
+}
+
+.login-form input[aria-invalid='true'] {
+  border-color: #9c1c1c;
+}
+
+.field-error {
+  margin-top: -0.5rem;
+  color: #9c1c1c;
+  font-size: 0.9rem;
+}
+
+.login-form button {
+  margin-top: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 0;
+  border-radius: 0.35rem;
+  background: #35104f;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-form button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.form-error {
+  padding: 0.75rem;
+  border-radius: 0.35rem;
+  background: #fff0f0;
+  color: #9c1c1c;
+}

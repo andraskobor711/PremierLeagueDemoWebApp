@@ -44,6 +44,9 @@
               ],
               "outputHashing": "all"
             },
+            "github-pages": {
+              "baseHref": "/PremierLeagueDemoWebApp/"
+            },
             "development": {
               "optimization": false,
               "extractLicenses": false,
@@ -71,10 +74,10 @@
           "defaultConfiguration": "development",
           "options": {
             "port": 57412
-          },
-          "test": {
-            "builder": "@angular/build:unit-test"
           }
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
         }
       }
     }

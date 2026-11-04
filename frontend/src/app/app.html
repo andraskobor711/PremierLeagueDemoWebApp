@@ -1,13 +1,18 @@
 <nav class="main-nav" aria-label="Main navigation">
   <div class="nav-content">
     <a class="home-link" routerLink="/home" aria-label="Home">
-      <img src="/PremierLeague.png" alt="Home">
+      <img src="PremierLeague.png" alt="Home">
     </a>
-    <ul class="nav-links">
-      <li><a class="nav-link nav-link--teams" routerLink="/teams">Teams</a></li>
-      <li><a class="nav-link nav-link--matches" routerLink="/matches/current-gameweek">Matches</a></li>
-      <li><a class="nav-link nav-link--tables" routerLink="/tables/current-season">Tables</a></li>
-    </ul>
+    @if (auth.isAuthenticated()) {
+      <ul class="nav-links">
+        <li><a class="nav-link nav-link--teams" routerLink="/teams">Teams</a></li>
+        <li><a class="nav-link nav-link--matches" routerLink="/matches/current-gameweek">Matches</a></li>
+        <li><a class="nav-link nav-link--tables" routerLink="/tables/current-season">Tables</a></li>
+        <li><button class="nav-link sign-out-button" type="button" (click)="signOut()">Sign out</button></li>
+      </ul>
+    } @else {
+      <a class="nav-link sign-in-link" routerLink="/login">Sign in</a>
+    }
   </div>
 </nav>
 

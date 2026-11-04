@@ -36,13 +36,45 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+### GitHub Pages build
+
+For the repository's project Pages URL, build with:
+
+```bash
+npm run build:github-pages
+```
+
+This uses `/PremierLeagueWebApp/` as the base path and creates a production build
+in `dist/frontend/browser`. The app uses hash-based routes, so Pages URLs look
+like `https://andraskobor711.github.io/PremierLeagueWebApp/#/login`; refreshing
+a routed page works without server-side route rewrites.
+
+The `Deploy Angular frontend to GitHub Pages` workflow builds and publishes this
+directory when frontend files are pushed to `main` or `frontend/hosting_in_github`, or
+when the workflow is run manually. In the repository's **Settings > Pages**,
+set the build and deployment source to **GitHub Actions**. After pushing the
+workflow to one of those branches, the deployed site is available at
+`https://andraskobor711.github.io/PremierLeagueWebApp/`.
+
 ## Running unit tests
 
 To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
 
 ```bash
-ng test
+npm test -- frontend
 ```
+
+## Authentication
+
+The app signs in through the API's `/auth/login` endpoint. Access tokens are kept in
+`sessionStorage` for the lifetime of the browser tab, attached only to requests to the
+configured API origin, and removed on expiry, sign-out, or an API `401`. A `403` keeps
+the session and displays the access-denied page.
+
+`sessionStorage` is a usability/security compromise, not protection against cross-site
+scripting: JavaScript running in the app can read the token. For a production deployment
+that needs stronger token isolation, consider a backend-for-frontend with Secure,
+HttpOnly, SameSite cookies and appropriate CSRF protections.
 
 ## Running end-to-end tests
 

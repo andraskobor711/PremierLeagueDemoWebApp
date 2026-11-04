@@ -1,9 +1,9 @@
 ﻿using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PremierLeagueWebApi.API.Schemas.Table;
 using PremierLeagueWebApi.Core.Managers;
-using PremierLeagueWebApi.Core.Models;
-using PremierLeagueWebApi.Core.Services;
+using PremierLeagueWebApi.Core.Security;
 
 namespace PremierLeagueWebApi.API.Controllers;
 
@@ -12,6 +12,7 @@ namespace PremierLeagueWebApi.API.Controllers;
 public class TableController(ITableManager _tableManager, ISeasonManager _seasonManager) : ControllerBase
 {
     [HttpGet]
+    [Authorize(Policy = AuthorizationClaims.CanReadTables)]
     [Produces("application/json")]
     [ProducesResponseType(typeof(TableSchema), StatusCodes.Status200OK)]
     public async Task<ActionResult<TableSchema>> GetTableBySeason([FromQuery] int? seasonId)
@@ -26,6 +27,7 @@ public class TableController(ITableManager _tableManager, ISeasonManager _season
 
     [HttpGet]
     [Route("current")]
+    [Authorize(Policy = AuthorizationClaims.CanReadTables)]
     [Produces("application/json")]
     [ProducesResponseType(typeof(TableSchema), StatusCodes.Status200OK)]
     public async Task<ActionResult<TableSchema>> GetCurrentSeasonTable()

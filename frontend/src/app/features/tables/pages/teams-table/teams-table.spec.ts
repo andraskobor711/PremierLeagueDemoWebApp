@@ -71,7 +71,7 @@ describe('TeamsTable', () => {
       'Second FC',
     ]);
     expect(Array.from(rows, row => row.cells[1].querySelector('img')?.getAttribute('src')))
-      .toEqual(['/TeamLogos/first-fc.png', '/TeamLogos/second-fc.png']);
+      .toEqual(['TeamLogos/first-fc.png', 'TeamLogos/second-fc.png']);
   });
 
   it('should sort a new column descending, then reverse direction on repeated clicks', () => {
