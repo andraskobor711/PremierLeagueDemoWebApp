@@ -44,6 +44,9 @@
               ],
               "outputHashing": "all"
             },
+            "github-pages": {
+              "baseHref": "/PremierLeagueWebApp/"
+            },
             "development": {
               "optimization": false,
               "extractLicenses": false,

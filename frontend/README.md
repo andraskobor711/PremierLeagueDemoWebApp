@@ -36,6 +36,26 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+### GitHub Pages build
+
+For the repository's project Pages URL, build with:
+
+```bash
+npm run build:github-pages
+```
+
+This uses `/PremierLeagueWebApp/` as the base path and creates a production build
+in `dist/frontend/browser`. The app uses hash-based routes, so Pages URLs look
+like `https://andraskobor711.github.io/PremierLeagueWebApp/#/login`; refreshing
+a routed page works without server-side route rewrites.
+
+The `Deploy Angular frontend to GitHub Pages` workflow builds and publishes this
+directory when frontend files are pushed to `main` or `hosting_in_github`, or
+when the workflow is run manually. In the repository's **Settings > Pages**,
+set the build and deployment source to **GitHub Actions**. After pushing the
+workflow to one of those branches, the deployed site is available at
+`https://andraskobor711.github.io/PremierLeagueWebApp/`.
+
 ## Running unit tests
 
 To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
