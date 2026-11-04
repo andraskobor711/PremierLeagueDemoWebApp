@@ -105,6 +105,18 @@
   outline-offset: 3px;
 }
 
+.read-only-notice {
+  padding: 0.75rem clamp(1rem, 4vw, 2.5rem);
+  border-bottom: 1px solid #eadca5;
+  background: #fff9e6;
+  color: #59491b;
+  text-align: center;
+}
+
+.read-only-notice p {
+  margin: 0;
+}
+
 .home-link {
   display: inline-flex;
   align-items: center;

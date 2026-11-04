@@ -6,6 +6,14 @@ import { AuthService } from './auth.service';
 
 const sessionStorageKey = 'pl-demo-auth-session';
 
+function createToken(payload: Record<string, unknown>): string {
+  const encodedPayload = btoa(JSON.stringify(payload))
+    .replace(/=/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+  return `header.${encodedPayload}.signature`;
+}
+
 describe('AuthService', () => {
   let service: AuthService;
   let httpTesting: HttpTestingController;
@@ -57,5 +65,30 @@ describe('AuthService', () => {
 
     expect(service.isAuthenticated()).toBe(false);
     expect(sessionStorage.getItem(sessionStorageKey)).toBeNull();
+  });
+
+  it('checks true-valued JWT claims and rejects missing or false claims', () => {
+    sessionStorage.setItem(sessionStorageKey, JSON.stringify({
+      accessToken: createToken({ CanEditMatches: 'true', CanReadMatches: 'false' }),
+      expiresAtUtc: new Date(Date.now() + 60_000).toISOString()
+    }));
+
+    expect(service.hasClaim('CanEditMatches')).toBe(true);
+    expect(service.hasClaim('CanReadMatches')).toBe(false);
+    expect(service.hasClaim('CanReadTeams')).toBe(false);
+  });
+
+  it('supports array-valued claims and fails closed for malformed JWT payloads', () => {
+    sessionStorage.setItem(sessionStorageKey, JSON.stringify({
+      accessToken: createToken({ CanEditMatches: ['false', 'true'] }),
+      expiresAtUtc: new Date(Date.now() + 60_000).toISOString()
+    }));
+    expect(service.hasClaim('CanEditMatches')).toBe(true);
+
+    sessionStorage.setItem(sessionStorageKey, JSON.stringify({
+      accessToken: 'not-a-jwt',
+      expiresAtUtc: new Date(Date.now() + 60_000).toISOString()
+    }));
+    expect(service.hasClaim('CanEditMatches')).toBe(false);
   });
 });

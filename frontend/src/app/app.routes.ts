@@ -11,6 +11,7 @@ import { TeamsTable } from './features/tables/pages/teams-table/teams-table';
 import { Forbidden } from './shared/components/forbidden/forbidden';
 import { Login } from './shared/components/login/login';
 import { authGuard } from './core/guards/auth.guard';
+import { claimGuard } from './core/guards/claim.guard';
 
 const redirectMatchesWithoutQueryParams: CanActivateFn = route => {
     if (Object.keys(route.queryParams).length > 0) {
@@ -28,13 +29,25 @@ export const routes: Routes = [
         canActivateChild: [authGuard],
         children: [
             { path: 'home', component: Home },
-            { path: 'teams', component: TeamList },
-            { path: 'teams/:id', component: TeamDetail },
-            { path: 'matches/current-gameweek', component: GameWeek },
-            { path: 'matches/new', component: CreateMatch },
-            { path: 'matches/:id/edit', component: EditMatch },
-            { path: 'matches', component: GameWeek, canActivate: [redirectMatchesWithoutQueryParams] },
-            { path: 'tables/current-season', component: TeamsTable },
+            { path: 'teams', component: TeamList, canActivate: [claimGuard('CanReadTeams')] },
+            { path: 'teams/:id', component: TeamDetail, canActivate: [claimGuard('CanReadTeams')] },
+            { path: 'matches/current-gameweek', component: GameWeek, canActivate: [claimGuard('CanReadMatches')] },
+            {
+                path: 'matches/new',
+                component: CreateMatch,
+                canActivate: [claimGuard('CanEditMatches', 'CanReadMatches', 'CanReadTeams')]
+            },
+            {
+                path: 'matches/:id/edit',
+                component: EditMatch,
+                canActivate: [claimGuard('CanEditMatches', 'CanReadMatches', 'CanReadTeams')]
+            },
+            {
+                path: 'matches',
+                component: GameWeek,
+                canActivate: [redirectMatchesWithoutQueryParams, claimGuard('CanReadMatches')]
+            },
+            { path: 'tables/current-season', component: TeamsTable, canActivate: [claimGuard('CanReadTables')] },
             { path: '', redirectTo: 'home', pathMatch: 'full' }
         ]
     },

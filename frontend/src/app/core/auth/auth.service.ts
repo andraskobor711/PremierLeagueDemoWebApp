@@ -14,10 +14,14 @@ interface StoredSession {
   expiresAtUtc: string;
 }
 
+type JwtClaims = Record<string, unknown>;
+
 @Service()
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly storageKey = 'pl-demo-auth-session';
+  private decodedClaimsToken: string | null = null;
+  private decodedClaims: JwtClaims | null = null;
 
   login(username: string, password: string): Observable<void> {
     return this.http
@@ -62,8 +66,48 @@ export class AuthService {
     return this.getAccessToken() !== null;
   }
 
+  hasClaim(claim: string): boolean {
+    const token = this.getAccessToken();
+    if (!token) {
+      return false;
+    }
+
+    const claims = this.readTokenClaims(token);
+    const value = claims?.[claim];
+    return value === 'true' || (Array.isArray(value) && value.includes('true'));
+  }
+
   logout(): void {
     sessionStorage.removeItem(this.storageKey);
+    this.decodedClaimsToken = null;
+    this.decodedClaims = null;
+  }
+
+  private readTokenClaims(token: string): JwtClaims | null {
+    if (this.decodedClaimsToken === token) {
+      return this.decodedClaims;
+    }
+
+    this.decodedClaimsToken = token;
+    this.decodedClaims = null;
+    const payload = token.split('.')[1];
+    if (!payload) {
+      return null;
+    }
+
+    try {
+      const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+      const paddedBase64 = base64.padEnd(Math.ceil(base64.length / 4) * 4, '=');
+      const bytes = Uint8Array.from(atob(paddedBase64), character => character.charCodeAt(0));
+      const parsed: unknown = JSON.parse(new TextDecoder().decode(bytes));
+      if (typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)) {
+        this.decodedClaims = parsed as JwtClaims;
+      }
+    } catch {
+      return null;
+    }
+
+    return this.decodedClaims;
   }
 
   private readSession(): StoredSession | null {
