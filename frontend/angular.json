@@ -45,7 +45,7 @@
               "outputHashing": "all"
             },
             "github-pages": {
-              "baseHref": "/PremierLeagueWebApp/"
+              "baseHref": "/PremierLeagueDemoWebApp/"
             },
             "development": {
               "optimization": false,
