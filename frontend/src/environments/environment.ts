@@ -1,3 +1,3 @@
 export const environment = {
-    plApiBaseUrl: 'https://localhost:7073'
+    plApiBaseUrl: 'https://premierleaguedemowebapp-a6a6e4g6cqesgea9.westeurope-01.azurewebsites.net'
 };
