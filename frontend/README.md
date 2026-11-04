@@ -50,7 +50,7 @@ like `https://andraskobor711.github.io/PremierLeagueWebApp/#/login`; refreshing
 a routed page works without server-side route rewrites.
 
 The `Deploy Angular frontend to GitHub Pages` workflow builds and publishes this
-directory when frontend files are pushed to `main` or `hosting_in_github`, or
+directory when frontend files are pushed to `main` or `frontend/hosting_in_github`, or
 when the workflow is run manually. In the repository's **Settings > Pages**,
 set the build and deployment source to **GitHub Actions**. After pushing the
 workflow to one of those branches, the deployed site is available at
