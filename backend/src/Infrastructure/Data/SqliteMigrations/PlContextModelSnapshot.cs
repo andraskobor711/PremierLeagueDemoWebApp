@@ -259,15 +259,10 @@ namespace PremierLeagueWebApi.Infrastructure.Data.SqliteMigrations
                         .HasMaxLength(9)
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("TeamId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Label")
                         .IsUnique();
-
-                    b.HasIndex("TeamId");
 
                     b.ToTable("Seasons");
                 });
@@ -313,6 +308,21 @@ namespace PremierLeagueWebApi.Infrastructure.Data.SqliteMigrations
                         .IsUnique();
 
                     b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("SeasonTeam", b =>
+                {
+                    b.Property<int>("SeasonId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("SeasonId", "TeamId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("SeasonTeams", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -393,16 +403,19 @@ namespace PremierLeagueWebApi.Infrastructure.Data.SqliteMigrations
                     b.Navigation("Season");
                 });
 
-            modelBuilder.Entity("PremierLeagueWebApi.Infrastructure.Models.Season", b =>
+            modelBuilder.Entity("SeasonTeam", b =>
                 {
-                    b.HasOne("PremierLeagueWebApi.Infrastructure.Models.Team", null)
-                        .WithMany("Seasons")
-                        .HasForeignKey("TeamId");
-                });
+                    b.HasOne("PremierLeagueWebApi.Infrastructure.Models.Season", null)
+                        .WithMany()
+                        .HasForeignKey("SeasonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("PremierLeagueWebApi.Infrastructure.Models.Team", b =>
-                {
-                    b.Navigation("Seasons");
+                    b.HasOne("PremierLeagueWebApi.Infrastructure.Models.Team", null)
+                        .WithMany()
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

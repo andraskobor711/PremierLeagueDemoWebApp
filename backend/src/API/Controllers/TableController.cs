@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using PremierLeagueWebApi.API.Schemas.Table;
 using PremierLeagueWebApi.Core.Managers;
 using PremierLeagueWebApi.Core.Security;
+using System.Reflection.Metadata.Ecma335;
 
 namespace PremierLeagueWebApi.API.Controllers;
 
@@ -18,9 +19,14 @@ public class TableController(ITableManager _tableManager, ISeasonManager _season
     public async Task<ActionResult<TableSchema>> GetTableBySeason([FromQuery] int? seasonId)
     {
         var usedSeasonId = seasonId
-            ?? (await _seasonManager.GetCurrentSeason()).Id;
+            ?? (await _seasonManager.GetCurrentSeasonBasicInfo())?.Id;
 
-        var table = await _tableManager.GetTableBySeason(usedSeasonId);
+        if (usedSeasonId is null)
+        {
+            return NotFound();
+        }
+
+        var table = await _tableManager.GetTableBySeason(usedSeasonId.Value);
 
         return Ok(table.Adapt<TableSchema>());
     }
@@ -32,7 +38,11 @@ public class TableController(ITableManager _tableManager, ISeasonManager _season
     [ProducesResponseType(typeof(TableSchema), StatusCodes.Status200OK)]
     public async Task<ActionResult<TableSchema>> GetCurrentSeasonTable()
     {
-        var currentSeason = await _seasonManager.GetCurrentSeason();
+        var currentSeason = await _seasonManager.GetCurrentSeasonBasicInfo();
+        if (currentSeason is null)
+        {
+            return NotFound();
+        }
 
         var table = await _tableManager.GetTableBySeason(currentSeason.Id);
 

@@ -8,10 +8,10 @@ public class TableManager(ISeasonManager _seasonManager, ITableService _tableSer
 {
     public async Task<Table> GetTableBySeason(int seasonId)
     {
-        var season = await _seasonManager.GetSeasonById(seasonId)
+        var seasonBasicInfo = await _seasonManager.GetSeasonBasicInfoById(seasonId)
             ?? throw new ExpectedDataMissingException($"Season with id '{seasonId}' is missing.");
 
         var sortedTableRows = await _tableService.GetSortedTableRowsBySeason(seasonId);
-        return new Table { Season = season, SortedRows = sortedTableRows };
+        return new Table { SeasonBasicInfo = seasonBasicInfo, SortedRows = sortedTableRows };
     }
 }

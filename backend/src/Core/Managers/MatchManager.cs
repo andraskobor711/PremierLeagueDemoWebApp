@@ -26,7 +26,7 @@ public class MatchManager(IMatchRepository _matchRepository, ISeasonManager _sea
             return [];
         }
 
-        return (await _matchRepository.GetByGameWeek(gameWeek.Season.Id, gameWeek.Number, cancellationToken))
+        return (await _matchRepository.GetByGameWeek(gameWeek.SeasonBasicInfo.Id, gameWeek.Number, cancellationToken))
             .OrderBy(m => m.KickoffAt).ThenBy(m => m.HomeTeam.UsedName);
     }
 
@@ -48,9 +48,9 @@ public class MatchManager(IMatchRepository _matchRepository, ISeasonManager _sea
     public async Task<GameWeek> GetCurrentGameWeek(CancellationToken? cancellationToken = null)
     {
         var now = DateTime.UtcNow;
-        var season = await _seasonManager.GetCurrentSeason()
+        var seasonBasicInfo = await _seasonManager.GetCurrentSeasonBasicInfo()
             ?? throw new InvalidOperationException("Current season is not available.");
-        var seasonId = season.Id;
+        var seasonId = seasonBasicInfo.Id;
 
         var matches = (await _matchRepository.GetBySeasonWithoutIncludes(seasonId))
             .Where(m => m.GameWeekNumber is not null)
@@ -63,6 +63,6 @@ public class MatchManager(IMatchRepository _matchRepository, ISeasonManager _sea
             ? gameWeekDeterminer.GameWeekNumber!.Value   // null values filtered earlier
             : 1;
 
-        return new GameWeek { Season = season, Number = gameWeekNumber };
+        return new GameWeek { SeasonBasicInfo = seasonBasicInfo, Number = gameWeekNumber };
     }
 }

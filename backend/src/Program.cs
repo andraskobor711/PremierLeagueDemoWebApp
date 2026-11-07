@@ -102,6 +102,10 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+// apply pending Db migrations
+await using var scope = app.Services.CreateAsyncScope();
+var dbContext = scope.ServiceProvider.GetRequiredService<PlContext>();
+await dbContext.Database.MigrateAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

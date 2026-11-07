@@ -47,6 +47,18 @@ public class PlContext(DbContextOptions<PlContext> options)
                   .HasMaxLength(9); // "yyyy/yyyy"
 
             entity.HasIndex(s => s.Label).IsUnique();
+
+            entity.HasMany(s => s.Teams)
+                  .WithMany(t => t.Seasons)
+                  .UsingEntity<Dictionary<string, object>>(
+                      "SeasonTeam",
+                      j => j.HasOne<Team>().WithMany().HasForeignKey("TeamId").OnDelete(DeleteBehavior.Cascade),
+                      j => j.HasOne<Season>().WithMany().HasForeignKey("SeasonId").OnDelete(DeleteBehavior.Cascade),
+                      j =>
+                      {
+                          j.HasKey("SeasonId", "TeamId");
+                          j.ToTable("SeasonTeams");
+                      });
         });
 
         modelBuilder.Entity<Match>(entity =>
