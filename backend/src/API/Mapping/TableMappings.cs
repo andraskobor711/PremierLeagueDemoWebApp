@@ -9,8 +9,8 @@ public class TableMappings : IRegister
     public void Register(TypeAdapterConfig config)
     {
         config.NewConfig<Table, TableSchema>()
-            .Map(dest => dest.SeasonId, src => src.Season.Id)
-            .Map(dest => dest.SeasonLabel, src => src.Season.Label)
+            .Map(dest => dest.SeasonId, src => src.SeasonBasicInfo.Id)
+            .Map(dest => dest.SeasonLabel, src => src.SeasonBasicInfo.Label)
             .Map(dest => dest.Rows, src => src.SortedRows);
 
         config.NewConfig<TableRow, TableRowSchema>()
