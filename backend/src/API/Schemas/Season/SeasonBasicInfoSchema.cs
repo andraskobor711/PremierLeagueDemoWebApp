@@ -1,6 +1,4 @@
-﻿using PremierLeagueWebApi.API.Schemas.Team;
-
-namespace PremierLeagueWebApi.API.Schemas.Season;
+﻿namespace PremierLeagueWebApi.API.Schemas.Season;
 
 public record SeasonBasicInfoSchema
 {

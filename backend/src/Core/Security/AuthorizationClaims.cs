@@ -7,6 +7,9 @@ public static class AuthorizationClaims
     public const string CanReadMatches = nameof(CanReadMatches);
     public const string CanEditMatches = nameof(CanEditMatches);
     public const string CanReadTables = nameof(CanReadTables);
+    public const string CanReadSeasons = nameof(CanReadSeasons);
+    public const string CanEditSeasons = nameof(CanEditSeasons);
+
 
     public static IReadOnlyList<string> All =>
     [
@@ -14,20 +17,10 @@ public static class AuthorizationClaims
         CanEditTeams,
         CanReadMatches,
         CanEditMatches,
-        CanReadTables
+        CanReadTables,
+        CanReadSeasons,
+        CanEditSeasons
     ];
-
-    public static IReadOnlyList<string> ForRole(string role) => role switch
-    {
-        UserRoles.Admin => All,
-        UserRoles.User =>
-        [
-            CanReadTeams,
-            CanReadMatches,
-            CanReadTables
-        ],
-        _ => throw new ArgumentOutOfRangeException(nameof(role), role, "Unsupported user role.")
-    };
 }
 
 public static class UserRoles

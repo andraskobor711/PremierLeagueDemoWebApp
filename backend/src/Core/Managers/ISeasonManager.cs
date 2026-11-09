@@ -12,4 +12,8 @@ public interface ISeasonManager
     Task<SeasonBasicInfo?> GetCurrentSeasonBasicInfo();
 
     Task<ICollection<Team>?> GetTeamsOfSeason(int id);
+
+    Task<SeasonBasicInfo> AddNewSeasonBasicInfo(SeasonBasicInfo newSeasonBasicInfo);
+
+    Task<Season?> UpdateSeasonTeams(int id, RawSeasonTeamsUpdate seasonUpdate);
 }
