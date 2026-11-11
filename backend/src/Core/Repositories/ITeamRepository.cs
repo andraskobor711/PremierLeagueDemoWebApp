@@ -6,9 +6,13 @@ public interface ITeamRepository
 {
     Task<IEnumerable<Team>> GetAll(CancellationToken? cancellation = default);
 
-    Task<Team?> GetTeamById(int id,CancellationToken? cancellation = default);
-    
-    Task<Team?> GetTeamByName(string name,CancellationToken? cancellation = default);
+    Task<Team?> GetTeamById(int id, CancellationToken? cancellation = default);
+
+    Task<IEnumerable<Team>> GetTeamsByIds(
+        IEnumerable<int> ids,
+        CancellationToken? cancellation = default);
+
+    Task<Team?> GetTeamByName(string name, CancellationToken? cancellation = default);
 
     Task<int> Add(Team team, CancellationToken? cancellation = default);
 

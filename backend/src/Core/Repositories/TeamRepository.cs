@@ -17,6 +17,13 @@ public class TeamRepository(PlContext _plContext) : ITeamRepository
             .Teams
             .FirstOrDefaultAsync(t => t.Id == id, cancellationToken ?? CancellationToken.None);
 
+    public async Task<IEnumerable<Team>> GetTeamsByIds(
+        IEnumerable<int> ids, CancellationToken? cancellationToken)
+        => await _plContext
+            .Teams
+            .Where(t => ids.Contains(t.Id))
+            .ToListAsync(cancellationToken ?? CancellationToken.None);
+
     public async Task<Team?> GetTeamByName(string name, CancellationToken? cancellationToken)
         => await _plContext
             .Teams

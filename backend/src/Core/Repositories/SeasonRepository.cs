@@ -1,5 +1,6 @@
 ﻿using Mapster;
 using Microsoft.EntityFrameworkCore;
+using PremierLeagueWebApi.Core.Exceptions;
 using PremierLeagueWebApi.Core.Models;
 using PremierLeagueWebApi.Infrastructure;
 using PremierLeagueWebApi.Infrastructure.Models;
@@ -22,6 +23,12 @@ public class SeasonRepository(PlContext _plContext) : ISeasonRepository
             .FirstOrDefaultAsync(s => s.Id == id, cancellationToken ?? CancellationToken.None))
             .Adapt<SeasonBasicInfo>();
 
+    public async Task<Season?> GetSeasonById(int id, CancellationToken? cancellationToken = default)
+        => await _plContext
+            .Seasons
+            .Include(s => s.Teams)
+            .FirstOrDefaultAsync(s => s.Id == id, cancellationToken ?? CancellationToken.None);
+
     public async Task<ICollection<Team>?> GetTeamsOfSeason(
         int seasonId,
         CancellationToken? cancellationToken = default)
@@ -43,5 +50,26 @@ public class SeasonRepository(PlContext _plContext) : ISeasonRepository
         await _plContext.SaveChangesAsync(cancellationToken ?? CancellationToken.None);
 
         return season.Id;
+    }
+
+    public async Task<Season?> UpdateSeasonTeams(
+        int id,
+        SeasonTeamsUpdate seasonUpdate,
+        CancellationToken? cancellationToken = default)
+    {
+        var storedSeason = await _plContext.Seasons
+            .Include(s => s.Teams)
+            .FirstOrDefaultAsync(s => s.Id == id);
+
+        if(storedSeason is null)
+        {
+            return null;
+        }
+
+        storedSeason.Teams = [.. seasonUpdate.Teams];
+
+        await _plContext.SaveChangesAsync();
+
+        return storedSeason;
     }
 }

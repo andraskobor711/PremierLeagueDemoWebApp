@@ -12,6 +12,10 @@ public interface ISeasonRepository
         int id,
         CancellationToken? cancellationToken = default);
 
+    Task<Season?> GetSeasonById(
+        int id,
+        CancellationToken? cancellationToken = default);
+
     Task<ICollection<Team>?> GetTeamsOfSeason(
         int seasonId,
         CancellationToken? cancellationToken = default);
@@ -21,4 +25,9 @@ public interface ISeasonRepository
         CancellationToken? cancellationToken = default);
 
     Task<int> AddSeason(Season season, CancellationToken? cancellationToken = default);
+
+    Task<Season?> UpdateSeasonTeams(
+        int id,
+        SeasonTeamsUpdate seasonTeamsUpdate,
+        CancellationToken? cancellationToken = default);
 }
