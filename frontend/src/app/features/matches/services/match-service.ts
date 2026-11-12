@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Service } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { Season } from '../models/season';
+import { Season } from '../../seasons/models/season';
 
 export interface GameWeek {
     season: Season,

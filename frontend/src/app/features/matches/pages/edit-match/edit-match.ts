@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { catchError, forkJoin, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { Team, TeamsService } from '../../../teams/services/teams-service';
 import { MatchForm } from '../../components/match-form/match-form';
-import { Season } from '../../models/season';
+import { Season } from '../../../seasons/models/season';
 import { Match, MatchService, UpdateMatchRequest } from '../../services/match-service';
 
 type EditMatchPageState =

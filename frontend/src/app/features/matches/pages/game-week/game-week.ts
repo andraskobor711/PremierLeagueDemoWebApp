@@ -12,8 +12,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { catchError, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { Match, MatchService } from '../../services/match-service';
-import { SeasonsService } from '../../services/season-service';
-import { Season } from '../../models/season';
+import { SeasonsService } from '../../../seasons/services/season-service';
+import { Season } from '../../../seasons/models/season';
 import { FALLBACK_TEAM_LOGO_PATH } from '../../../teams/services/teams-service';
 import { AuthService } from '../../../../core/auth/auth.service';
 

@@ -5,8 +5,8 @@ import { catchError, forkJoin, map, Observable, of, startWith } from 'rxjs';
 import { Team, TeamsService } from '../../../teams/services/teams-service';
 import { MatchForm } from '../../components/match-form/match-form';
 import { CreateMatchRequest, MatchService } from '../../services/match-service';
-import { Season } from '../../models/season';
-import { SeasonsService } from '../../services/season-service';
+import { Season } from '../../../seasons/models/season';
+import { SeasonsService } from '../../../seasons/services/season-service';
 
 type CreateMatchPageState =
   | { status: 'loading' }

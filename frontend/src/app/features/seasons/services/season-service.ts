@@ -8,6 +8,10 @@ import { Season } from '../models/season';
 export class SeasonsService {
     private readonly seasonsClient = inject(HttpClient);
 
+    getSeasons(): Observable<Season[]> {
+        return this.seasonsClient.get<Season[]>(`${environment.plApiBaseUrl}/seasons`);
+    }
+
     getCurrentSeason(): Observable<Season> {
         return this.seasonsClient.get<Season>(`${environment.plApiBaseUrl}/seasons/current`);
     }
