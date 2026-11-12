@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { of } from 'rxjs';
 import { MatchService } from '../../services/match-service';
-import { SeasonsService } from '../../services/season-service';
+import { SeasonsService } from '../../../seasons/services/season-service';
 import { AuthService } from '../../../../core/auth/auth.service';
 import { GameWeek } from './game-week';
 

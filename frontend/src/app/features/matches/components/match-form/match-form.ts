@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Season } from '../../models/season';
+import { Season } from '../../../seasons/models/season';
 import { CreateMatchRequest, Match } from '../../services/match-service';
 import { Team } from '../../../teams/services/teams-service';
 import { TeamPicker } from '../team-picker/team-picker';

@@ -1,19 +1,18 @@
-using Mapster;
+using System.IdentityModel.Tokens.Jwt;
+using System.Reflection;
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using Mapster;
 using PremierLeagueWebApi.Core.Managers;
 using PremierLeagueWebApi.Core.Repositories;
 using PremierLeagueWebApi.Core.Security;
 using PremierLeagueWebApi.Core.Services;
 using PremierLeagueWebApi.Infrastructure.Auth;
 using PremierLeagueWebApi.Infrastructure;
-using System.Reflection;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -105,7 +104,10 @@ var app = builder.Build();
 // apply pending Db migrations
 await using var scope = app.Services.CreateAsyncScope();
 var dbContext = scope.ServiceProvider.GetRequiredService<PlContext>();
-await dbContext.Database.MigrateAsync();
+if (dbContext.Database.GetPendingMigrations().Any())
+{
+    await dbContext.Database.MigrateAsync();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

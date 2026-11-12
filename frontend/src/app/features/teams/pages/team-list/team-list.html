@@ -1,16 +1,86 @@
 <div class="teams-page">
-  <ul class="team-grid">
-    @for (team of teams$ | async; track team.id) {
-      <li class="team-card">
-        <a class="team-link" [routerLink]="['/teams', team.id]" [attr.aria-label]="team.usedName">
-          <img
-            [src]="team.logoPath"
-            [alt]="team.usedName"
-            (error)="onLogoError($event)"
-          />
-          <span class="team-name">{{ team.usedName }}</span>
-        </a>
-      </li>
+  @if (state$ | async; as state) {
+    @if (state.status === 'loading') {
+      <p class="status-message" role="status">Loading seasons...</p>
+    } @else if (state.status === 'seasons-error') {
+      <p class="error-message" role="alert">Something went wrong while loading seasons.</p>
+    } @else {
+      <div class="season-selector">
+        <span class="season-label" id="season-label">Season</span>
+        <div class="season-dropdown">
+          <button
+            id="season-select"
+            class="season-dropdown-toggle"
+            type="button"
+            role="combobox"
+            aria-haspopup="listbox"
+            aria-controls="season-options"
+            aria-labelledby="season-label season-value"
+            [attr.aria-expanded]="isSeasonDropdownOpen"
+            [attr.aria-activedescendant]="
+              isSeasonDropdownOpen && activeSeasonId !== null ? 'season-option-' + activeSeasonId : null
+            "
+            (click)="toggleSeasonDropdown(state)"
+            (keydown)="onSeasonDropdownKeydown($event, state)"
+          >
+            <span id="season-value">{{ getSelectedSeasonLabel(state) }}</span>
+            <span class="season-dropdown-arrow" aria-hidden="true"></span>
+          </button>
+          @if (isSeasonDropdownOpen) {
+            <ul
+              class="season-options"
+              id="season-options"
+              role="listbox"
+              aria-labelledby="season-label"
+            >
+              @for (season of state.seasons; track season.id) {
+                <li
+                  class="season-option"
+                  [class.keyboard-active]="isKeyboardNavigation && activeSeasonId === season.id"
+                  [attr.aria-selected]="state.selectedSeasonId === season.id"
+                  [id]="'season-option-' + season.id"
+                  role="option"
+                  tabindex="-1"
+                  (mouseenter)="setActiveSeason(season.id)"
+                  (click)="selectSeason(season.id)"
+                  (keydown)="onSeasonOptionKeydown($event, season.id)"
+                >
+                  {{ season.label }}
+                </li>
+              }
+            </ul>
+          }
+        </div>
+      </div>
+
+      @switch (state.status) {
+        @case ('teams-loading') {
+          <p class="status-message" role="status">Loading teams...</p>
+        }
+        @case ('loaded') {
+          @if (state.teams.length > 0) {
+            <ul class="team-grid">
+              @for (team of state.teams; track team.id) {
+                <li class="team-card">
+                  <a class="team-link" [routerLink]="['/teams', team.id]" [attr.aria-label]="team.usedName">
+                    <img
+                      [src]="team.logoPath"
+                      [alt]="team.usedName"
+                      (error)="onLogoError($event)"
+                    />
+                    <span class="team-name">{{ team.usedName }}</span>
+                  </a>
+                </li>
+              }
+            </ul>
+          } @else {
+            <p class="status-message" role="status">No teams are listed for this season.</p>
+          }
+        }
+        @case ('teams-error') {
+          <p class="error-message" role="alert">Something went wrong while loading teams.</p>
+        }
+      }
     }
-  </ul>
+  }
 </div>

@@ -22,6 +22,12 @@ export interface Team extends TeamResponse {
 export class TeamsService {
     private readonly teamsClient = inject(HttpClient);
 
+    getTeamsBySeason(seasonId: number): Observable<Team[]> {
+        return this.teamsClient.get<TeamResponse[]>(`${environment.plApiBaseUrl}/seasons/${seasonId}/teams`).pipe(
+            map(teams => teams.map(team => this.toTeam(team)))
+        );
+    }
+
     getTeams(): Observable<Team[]> {
         return this.teamsClient.get<TeamResponse[]>(`${environment.plApiBaseUrl}/teams`).pipe(
             map(teams => teams.map(team => this.toTeam(team)))
